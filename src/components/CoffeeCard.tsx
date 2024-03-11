@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         gap: SPACING.space_10,
         paddingHorizontal: SPACING.space_15,
         position: 'absolute',
-        borderBottomEndRadius: BORDERRADIUS.radius_20,
+        borderBottomStartRadius: BORDERRADIUS.radius_20,
         borderTopRightRadius: BORDERRADIUS.radius_20,
         top: 0,
         right: 0
