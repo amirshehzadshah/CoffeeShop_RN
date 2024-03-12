@@ -7,7 +7,6 @@ import { StatusBar } from 'react-native';
 import HeaderBar from '../components/HeaderBar';
 import Customicon from '../components/Customicon';
 import CoffeeCard from '../components/CoffeeCard';
-import { useNavigation } from '@react-navigation/native';
 
 const getCategoriesFromData = (data: any) => {
   let temp: any = {};
@@ -281,8 +280,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width - SPACING.space_30 * 2,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: SPACING.space_20 * 5.88,
-    backgroundColor: 'red'
+    paddingVertical: SPACING.space_20 * 5.88
   },
   CoffeeBeansTitle: {
     fontSize: FONTSIZE.size_18,
