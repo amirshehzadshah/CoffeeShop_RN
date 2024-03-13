@@ -1,4 +1,4 @@
-import { Dimensions, FlatList, ScrollView, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native'
+import { Dimensions, FlatList, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { useStore } from '../store/store'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -31,10 +31,12 @@ const getCoffeeList = (catagory: string, data: any) => {
   }
 }
 
-const HomeScreen = ({navigation}: any) => {
+const HomeScreen = ({ navigation }: any) => {
 
   const CoffeeList = useStore((state: any) => state.CoffeeList)
   const BeanList = useStore((state: any) => state.BeanList)
+  const addToCart = useStore((state: any) => state.addToCart)
+  const calculateCartPrice = useStore((state: any) => state.calculateCartPrice)
   const [catagories, setCatagories] = useState(getCategoriesFromData(CoffeeList))
   const [searchText, setSearchText] = useState('')
   const [catagoryIndex, setCatagoryIndex] = useState({
@@ -73,11 +75,21 @@ const HomeScreen = ({navigation}: any) => {
     setSearchText('')
   }
 
+  const CardAddToCartHandler = ({
+    id, name, roasted, imagelink_square, special_ingredient, prices, type, index
+  }: any) => {
+    addToCart({
+      id, name, roasted, imagelink_square, special_ingredient, prices, type, index
+    })
+    calculateCartPrice()
+    ToastAndroid.showWithGravity(`${name} is Add to Cart`, ToastAndroid.SHORT, ToastAndroid.CENTER)
+  }
+
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}>
-        <HeaderBar title={'Home Screen'} />
+        <HeaderBar title={''} />
         <Text style={styles.ScreenText}>Find the best{'\n'}coffee for you</Text>
         <View style={styles.InputContainerComponent}>
           <TouchableOpacity onPress={() => {
@@ -175,10 +187,10 @@ const HomeScreen = ({navigation}: any) => {
                   special_ingredient={item.special_ingredient}
                   price={item.prices[2]}
                   average_rating={item.average_rating}
-                  favourite={item.favourite}
                   type={item.type}
+                  roasted={item.roasted}
                   index={item.index}
-                  buttonPressHandler={() => { }} />
+                  buttonPressHandler={CardAddToCartHandler} />
               </TouchableOpacity>
             )
           }} />
@@ -205,10 +217,10 @@ const HomeScreen = ({navigation}: any) => {
                   special_ingredient={item.special_ingredient}
                   price={item.prices[2]}
                   average_rating={item.average_rating}
-                  favourite={item.favourite}
                   type={item.type}
+                  roasted={item.roasted}
                   index={item.index}
-                  buttonPressHandler={() => { }} />
+                  buttonPressHandler={CardAddToCartHandler} />
               </TouchableOpacity>
             )
           }} />

@@ -37,7 +37,7 @@ const TabNavigator = () => {
                     } />
                 )
             }} />
-            <Tab.Screen name='Favourte' component={FavoritesScreen} options={{
+            <Tab.Screen name='Favourite' component={FavoritesScreen} options={{
                 tabBarIcon: ({focused, color, size}) => (
                     <Customicon name='like' size={25} color={
                         focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex

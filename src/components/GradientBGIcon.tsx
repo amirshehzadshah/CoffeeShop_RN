@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { FC } from 'react'
+import { StyleSheet, View } from 'react-native'
+import React from 'react'
 import LinearGradient from 'react-native-linear-gradient';
 import { COLORS, SPACING } from '../theme/theme';
 import Customicon from './Customicon';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 interface GradientBGIconProps {
     name: string;
