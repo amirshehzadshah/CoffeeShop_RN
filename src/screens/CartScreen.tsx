@@ -11,7 +11,7 @@ import CartItem from '../components/CartItem'
 const CartScreen = ({navigation, route}: any) => {
 
   const CartList = useStore((state: any) => state.CartList)
-  const cartPrice = useStore((state: any) => state.cartPrice)
+  const CartPrice = useStore((state: any) => state.CartPrice)
   const incrementCartItemQuantity = useStore((state: any) => state.incrementCartItemQuantity)
   const decrementCartItemQuantity = useStore((state: any) => state.decrementCartItemQuantity)
   const calculateCartPrice = useStore((state: any) => state.calculateCartPrice)
@@ -22,9 +22,23 @@ const CartScreen = ({navigation, route}: any) => {
     navigation.push('Payment')
   }
 
-  const incrementCartItemQuantityHandler = () => {}
+  const CartItemHandler = (data: any) => {
+    navigation.push('Details', {
+      index: data.index,
+      id: data.id,
+      type: data.type
+    })
+  }
 
-  const decrementCartItemQuantityHandler = () => {}
+  const incrementCartItemQuantityHandler = (id: string, size: string) => {
+    incrementCartItemQuantity(id, size)
+    calculateCartPrice()
+  }
+  
+  const decrementCartItemQuantityHandler = (id: string, size: string) => {
+    decrementCartItemQuantity(id, size)
+  calculateCartPrice()
+  }
 
   console.log(CartList.length)
   return (
@@ -42,7 +56,12 @@ const CartScreen = ({navigation, route}: any) => {
           : <View style={styles.ListItemContainer}>
             {
               CartList.map((data: any) => (
-                <TouchableOpacity onPress={() => {}}
+                <TouchableOpacity onPress={() => {
+                  navigation.push('Details', {
+                    index: data.index,
+                    id: data.id,
+                    type: data.type
+                  })}}
                 key={data.id}>
                   <CartItem
                   id={data.id} 
@@ -64,7 +83,7 @@ const CartScreen = ({navigation, route}: any) => {
           CartList.length != 0
           ? <PaymentFooter
           buttonTitle='Pay'
-          price={{price: cartPrice, currency: '$'}}
+          price={{price: CartPrice, currency: '$'}}
           buttonPressHandler={payButtonHandler} />
           : <></>
         }
