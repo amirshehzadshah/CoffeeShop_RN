@@ -37,9 +37,6 @@ const HomeScreen = ({ navigation }: any) => {
   const BeanList = useStore((state: any) => state.BeanList)
   const addToCart = useStore((state: any) => state.addToCart)
   const calculateCartPrice = useStore((state: any) => state.calculateCartPrice)
-  const CartList = useStore((state: any) => state.CartList)
-const mapID = CartList.map((item: any) => item.id);
-  console.log("🕵️‍♂️ > file: CoffeeCard.tsx:39 > CartList: ", mapID);
 
   
   const [catagories, setCatagories] = useState(getCategoriesFromData(CoffeeList))
@@ -65,7 +62,6 @@ const mapID = CartList.map((item: any) => item.id);
           item.name.toLowerCase().includes(search.toLowerCase()))
       ])
     }
-    // setSearchText('')
   }
 
   const resetSearchCoffee = () => {
@@ -195,7 +191,6 @@ const mapID = CartList.map((item: any) => item.id);
                   type={item.type}
                   roasted={item.roasted}
                   index={item.index}
-                  cartList={mapID}
                   buttonPressHandler={CardAddToCartHandler} />
               </TouchableOpacity>
             )

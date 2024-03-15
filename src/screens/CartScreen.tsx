@@ -22,14 +22,6 @@ const CartScreen = ({navigation, route}: any) => {
     navigation.push('Payment')
   }
 
-  const CartItemHandler = (data: any) => {
-    navigation.push('Details', {
-      index: data.index,
-      id: data.id,
-      type: data.type
-    })
-  }
-
   const incrementCartItemQuantityHandler = (id: string, size: string) => {
     incrementCartItemQuantity(id, size)
     calculateCartPrice()
@@ -40,7 +32,7 @@ const CartScreen = ({navigation, route}: any) => {
   calculateCartPrice()
   }
 
-  console.log(CartList.length)
+  // console.log(CartList.length)
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />

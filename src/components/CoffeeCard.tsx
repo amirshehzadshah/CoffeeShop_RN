@@ -4,7 +4,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
 import Customicon from './Customicon';
 import BGIcon from './BGIcon';
-import { useStore } from '../store/store';
 
 const CARD_WIDTH = Dimensions.get('window').width * 0.32;
 
@@ -19,7 +18,6 @@ interface CoffeeCardProps {
     roasted: string
     index: number
     buttonPressHandler: any
-    cartList: any
 }
 
 const CoffeeCard: React.FC<CoffeeCardProps> = ({
@@ -32,8 +30,7 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({
     type,
     roasted,
     index,
-    buttonPressHandler,
-    cartList
+    buttonPressHandler
 }) => {
 
     return (
@@ -54,7 +51,6 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({
                 <Text style={styles.CardPriceCurrency}>
                     $ <Text style={styles.CardPrice}>{price.price}</Text>
                 </Text>
-                {cartList && cartList.map((item: any, index: any) => {
                 <TouchableOpacity onPress={() => {
                     buttonPressHandler({
                         id, index, type, roasted, imagelink_square, name, special_ingredient, prices: [{ ...price, quantity: 1 }]
@@ -62,12 +58,6 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({
                 }}>
                     <BGIcon name='add' color={COLORS.primaryWhiteHex} size={FONTSIZE.size_10} BGColor={COLORS.primaryOrangeHex} />
                 </TouchableOpacity>
-                    if (item === 'C2') {
-                        <Text style={{color: COLORS.primaryWhiteHex}}>C2</Text>
-                    } else {
-                        <Text style={{color: COLORS.primaryWhiteHex}}>Nothing</Text>
-                    }
-                })}
             </View>
         </LinearGradient>
     )

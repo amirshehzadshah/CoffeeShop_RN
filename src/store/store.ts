@@ -9,11 +9,11 @@ import { produce } from "immer";
 
 export const useStore = create(
     persist(
-        (set, get) => ({
+        (set) => ({
             CoffeeList: CoffeeData,
             BeanList: BeansData,
             CartPrice: 0,
-            FavorvitesList: [],
+            FavoritesList: [],
             CartList: [],
             OrderHistoryList: [],
             addToCart: (cartItem: any) => set(produce(state => {

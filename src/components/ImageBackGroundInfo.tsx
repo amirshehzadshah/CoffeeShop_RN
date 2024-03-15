@@ -3,7 +3,6 @@ import React from 'react'
 import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme'
 import GradientBGIcon from './GradientBGIcon'
 import Customicon from './Customicon'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 interface ImageBackGroundInfoProps {
     EnableBackHandler: boolean
