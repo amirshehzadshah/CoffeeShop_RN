@@ -168,13 +168,12 @@ export const useStore = create(
                     }
                 }
             })),
-            OrderHstoryListFromCart: () => set(produce(state => {
+            orderHstoryListFromCart: () => set(produce(state => {
                 let temp = state.CartList.reduce(
                     (accumulator: number, currentValue: any) => accumulator + parseFloat(
                         currentValue.ItemPrice
                     ), 0
-                );
-                let currentCartListTotalPrice = temp.toFixed(2).toString()
+                )
                 if (state.OrderHistoryList.length > 0) {
                     state.OrderHistoryList.unshift({
                         orderDate: new Date().toDateString() + ' ' + new Date().toLocaleTimeString(),
