@@ -5,17 +5,52 @@ import BeansData from "../data/BeansData";
 import { createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { produce } from "immer";
+import firestore from "@react-native-firebase/firestore";
 
 
 export const useStore = create(
     persist(
         (set) => ({
-            CoffeeList: CoffeeData,
-            BeanList: BeansData,
+            CoffeeList: [],
+            // BeanList: BeansData,
+            BeanList: [],
             CartPrice: 0,
             FavoritesList: [],
             CartList: [],
             OrderHistoryList: [],
+            getData: async () => {
+                let retries = 0;
+                const maxRetries = 5;
+                const delay = 1000; // 1 second delay
+                
+                while (retries < maxRetries) {
+                    try {
+                        const coffeedata = await firestore().collection('coffee_shop').get();
+                        const coffeeDataArray = coffeedata.docs.map(doc => doc.data());
+
+                        console.log("🕵️‍♂️ > file: store.ts:31 > getData: > coffeeDataArray: ", coffeeDataArray);
+
+                        set({ CoffeeList: coffeeDataArray });
+
+                        const beandata = await firestore().collection('bean_shop').get();
+                        const beanDataArray = beandata.docs.map(doc => doc.data());
+
+                        console.log("🕵️‍♂️ > file: store.ts:38 > getData: > beanDataArray: ", beanDataArray);
+
+                        set({ BeanList: beanDataArray });
+                        break; // Break out of the retry loop if successful
+                    } catch (error: any) {
+                        if (error.code === 'firestore/unavailable') {
+                            console.log("Firestore service is currently unavailable. Retrying in a moment...");
+                            await new Promise(resolve => setTimeout(resolve, delay * (2 ** retries))); // Exponential backoff
+                            retries++;
+                        } else {
+                            console.log("🕵️‍♂️ > file: store.ts:27 > getData:async > error: ", error);
+                            break; // Break out of the retry loop for other errors
+                        }
+                    }
+                }
+            },
             addToCart: (cartItem: any) => set(produce(state => {
                 let found = false;
                 for (let i = 0; i < state.CartList.length; i++) {

@@ -1,5 +1,5 @@
 import { Dimensions, FlatList, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useStore } from '../store/store'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
@@ -33,12 +33,24 @@ const getCoffeeList = (catagory: string, data: any) => {
 
 const HomeScreen = ({ navigation }: any) => {
 
+  const getData = useStore((state: any) => state.getData)
   const CoffeeList = useStore((state: any) => state.CoffeeList)
   const BeanList = useStore((state: any) => state.BeanList)
+
+  console.log("🕵️‍♂️ > file: HomeScreen.tsx:40 > HomeScreen > BeanList: ", BeanList);
+  // Loop through each item in BeanList
+  BeanList.forEach((beanItem: any) => {
+    // Access the prices array of each item
+    const prices = beanItem.prices;
+
+    // Now you can use the prices array as needed
+    console.log(prices);
+  });
+
   const addToCart = useStore((state: any) => state.addToCart)
   const calculateCartPrice = useStore((state: any) => state.calculateCartPrice)
 
-  
+
   const [catagories, setCatagories] = useState(getCategoriesFromData(CoffeeList))
   const [searchText, setSearchText] = useState('')
   const [catagoryIndex, setCatagoryIndex] = useState({
@@ -85,6 +97,11 @@ const HomeScreen = ({ navigation }: any) => {
     calculateCartPrice()
     ToastAndroid.showWithGravity(`${name} is Add to Cart`, ToastAndroid.SHORT, ToastAndroid.CENTER)
   }
+
+  useEffect(() => {
+    getData()
+  }, [])
+
 
   return (
     <View style={styles.ScreenContainer}>
