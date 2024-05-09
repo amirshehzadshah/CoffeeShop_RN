@@ -39,7 +39,7 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({
             end={{ x: 1, y: 1 }}
             style={styles.CardLinearGradientContainer}
             colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}>
-            <ImageBackground source={imagelink_square} style={styles.CardImageBG} resizeMode='cover' >
+            <ImageBackground source={{ uri: imagelink_square }} style={styles.CardImageBG} resizeMode='cover' >
                 <View style={styles.CardRatingContainer}>
                     <Customicon name='star' color={COLORS.primaryOrangeHex} size={FONTSIZE.size_16} />
                     <Text style={styles.CardRatingText}>{average_rating}</Text>

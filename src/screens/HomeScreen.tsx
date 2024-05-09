@@ -18,7 +18,8 @@ const getCategoriesFromData = (data: any) => {
     }
   }
   let catagories = Object.keys(temp);
-  catagories.unshift('All');
+  catagories.unshift('All')
+  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:22 > getCategoriesFromData > catagories: ", catagories);
   return catagories;
 }
 
@@ -34,41 +35,50 @@ const getCoffeeList = (catagory: string, data: any) => {
 const HomeScreen = ({ navigation }: any) => {
 
   const getData = useStore((state: any) => state.getData)
+
   const CoffeeList = useStore((state: any) => state.CoffeeList)
+
+  console.log("🕵️‍♂️ > file: HomeScreen.tsx:40 > HomeScreen > CoffeeList: ", CoffeeList);
+
   const BeanList = useStore((state: any) => state.BeanList)
 
-  console.log("🕵️‍♂️ > file: HomeScreen.tsx:40 > HomeScreen > BeanList: ", BeanList);
-  // Loop through each item in BeanList
-  BeanList.forEach((beanItem: any) => {
-    // Access the prices array of each item
-    const prices = beanItem.prices;
+  // // Loop through each item in BeanList
+  // BeanList.forEach((beanItem: any) => {
+  //   // Access the prices array of each item
+  //   const prices = beanItem.imagelink_square;
 
-    // Now you can use the prices array as needed
-    console.log(prices);
-  });
+  //   // Now you can use the prices array as needed
+  //   // console.log(prices);
+  // });
 
   const addToCart = useStore((state: any) => state.addToCart)
   const calculateCartPrice = useStore((state: any) => state.calculateCartPrice)
-
-
+  
+  
   const [catagories, setCatagories] = useState(getCategoriesFromData(CoffeeList))
+  // useEffect(() => {
+  //   console.log('catagories  :', catagories)
+  // },[catagories])
+  console.log("🕵️‍♂️ > file: HomeScreen.tsx:65 > HomeScreen > catagories: ", catagories);
+  
   const [searchText, setSearchText] = useState('')
   const [catagoryIndex, setCatagoryIndex] = useState({
     index: 0,
     catagory: catagories[0]
   })
   const [sortedCoffee, setSortedCoffee] = useState(getCoffeeList(catagoryIndex.catagory, CoffeeList))
-
   const tabBarHeight = useBottomTabBarHeight();
   const ListRef: any = useRef<FlatList>();
 
   const searchCoffee = (search: string) => {
     if (search != '') {
       ListRef.current.scrollToOffset({
+
+        
         animated: true,
         offset: 0
       })
-      setCatagoryIndex({ index: 0, catagory: catagories[0] })
+      setCatagoryIndex({ index: 0, catagory: catagories[0] }) 
       setSortedCoffee([
         ...CoffeeList.filter((item: any) =>
           item.name.toLowerCase().includes(search.toLowerCase()))
@@ -98,9 +108,11 @@ const HomeScreen = ({ navigation }: any) => {
     ToastAndroid.showWithGravity(`${name} is Add to Cart`, ToastAndroid.SHORT, ToastAndroid.CENTER)
   }
 
-  useEffect(() => {
-    getData()
-  }, [])
+  if (!CoffeeList) {
+    useEffect(() => {
+      getData()
+    },[getData])
+  }
 
 
   return (
@@ -147,7 +159,7 @@ const HomeScreen = ({ navigation }: any) => {
         </View>
         <ScrollView
           horizontal
-          showsHorizontalScrollIndicator={false}
+          // showsHorizontalScrollIndicator={false}
           style={styles.CatagoryScrollViewStyle}>
           {
             catagories.map((data, index) => (
@@ -177,41 +189,46 @@ const HomeScreen = ({ navigation }: any) => {
             ))
           }
         </ScrollView>
-        <FlatList
-          ref={ListRef}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          ListEmptyComponent={
-            <View style={styles.EmptyListContainer}>
-              <Text style={styles.CatagoryText} >No Coffee Available</Text>
-            </View>
-          }
-          data={sortedCoffee}
-          contentContainerStyle={styles.FlatListContainer}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => {
-            return (
-              <TouchableOpacity onPress={() => {
-                navigation.push('Details', {
-                  index: item.index,
-                  id: item.id,
-                  type: item.type
-                })
-              }}>
-                <CoffeeCard
-                  id={item.id}
-                  name={item.name}
-                  imagelink_square={item.imagelink_square}
-                  special_ingredient={item.special_ingredient}
-                  price={item.prices[2]}
-                  average_rating={item.average_rating}
-                  type={item.type}
-                  roasted={item.roasted}
-                  index={item.index}
-                  buttonPressHandler={CardAddToCartHandler} />
-              </TouchableOpacity>
-            )
-          }} />
+        {!sortedCoffee && <View style={styles.EmptyListContainer}>
+          <Text style={styles.CatagoryText} >Loading . . .</Text>
+        </View>}
+        {sortedCoffee && (
+          <FlatList
+            ref={ListRef}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            // ListEmptyComponent={
+            //   <View style={styles.EmptyListContainer}>
+            //     <Text style={styles.CatagoryText} >No Coffee Available</Text>
+            //   </View>
+            // }
+            data={sortedCoffee}
+            contentContainerStyle={styles.FlatListContainer}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity onPress={() => {
+                  navigation.push('Details', {
+                    index: item.index,
+                    id: item.id,
+                    type: item.type
+                  })
+                }}>
+                  <CoffeeCard
+                    id={item.id}
+                    name={item.name}
+                    imagelink_square={item.imagelink_square}
+                    special_ingredient={item.special_ingredient}
+                    price={item.prices[2]}
+                    average_rating={item.average_rating}
+                    type={item.type}
+                    roasted={item.roasted}
+                    index={item.index}
+                    buttonPressHandler={CardAddToCartHandler} />
+                </TouchableOpacity>
+              )
+            }} />
+        )}
         <Text style={styles.CoffeeBeansTitle}>Coffee Beans</Text>
         <FlatList
           horizontal
@@ -284,7 +301,9 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.space_20
   },
   CatagoryScrollViewContainer: {
-    paddingHorizontal: SPACING.space_15
+    paddingHorizontal: SPACING.space_15,
+    borderWidth: 2,
+    borderColor: 'red'
   },
   CatagoryScrollViewItem: {
     alignItems: 'center'

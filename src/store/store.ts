@@ -19,37 +19,17 @@ export const useStore = create(
             CartList: [],
             OrderHistoryList: [],
             getData: async () => {
-                let retries = 0;
-                const maxRetries = 5;
-                const delay = 1000; // 1 second delay
-                
-                while (retries < maxRetries) {
                     try {
                         const coffeedata = await firestore().collection('coffee_shop').get();
                         const coffeeDataArray = coffeedata.docs.map(doc => doc.data());
-
-                        console.log("🕵️‍♂️ > file: store.ts:31 > getData: > coffeeDataArray: ", coffeeDataArray);
-
-                        set({ CoffeeList: coffeeDataArray });
-
-                        const beandata = await firestore().collection('bean_shop').get();
-                        const beanDataArray = beandata.docs.map(doc => doc.data());
-
-                        console.log("🕵️‍♂️ > file: store.ts:38 > getData: > beanDataArray: ", beanDataArray);
-
-                        set({ BeanList: beanDataArray });
-                        break; // Break out of the retry loop if successful
-                    } catch (error: any) {
-                        if (error.code === 'firestore/unavailable') {
-                            console.log("Firestore service is currently unavailable. Retrying in a moment...");
-                            await new Promise(resolve => setTimeout(resolve, delay * (2 ** retries))); // Exponential backoff
-                            retries++;
-                        } else {
-                            console.log("🕵️‍♂️ > file: store.ts:27 > getData:async > error: ", error);
-                            break; // Break out of the retry loop for other errors
-                        }
+                        // console.log("🕵️‍♂️ > file: store.ts:25 > getData: > coffeedata: ", coffeeDataArray);
+                            set({ CoffeeList : coffeeDataArray })
+                        // set((state: any) => {
+                        //     state.CoffeeList = coffeeDataArray
+                        // })
+                    } catch (error) {
+                        console.log("🕵️‍♂️ > file: store.ts:33 > getData:async > error: ", error);
                     }
-                }
             },
             addToCart: (cartItem: any) => set(produce(state => {
                 let found = false;

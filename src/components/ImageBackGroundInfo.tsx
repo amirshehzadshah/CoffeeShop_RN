@@ -24,7 +24,7 @@ const ImageBackGroundInfo: React.FC<ImageBackGroundInfoProps> = ({ EnableBackHan
   return (
     <View>
       <ImageBackground
-      source={imagelink_portrait}
+      source={{uri: imagelink_portrait}}
       style={styles.ItemBackgroundImage}>
         {
             EnableBackHandler ? (
