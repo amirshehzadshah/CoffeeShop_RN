@@ -19,17 +19,21 @@ export const useStore = create(
             CartList: [],
             OrderHistoryList: [],
             getData: async () => {
-                    try {
-                        const coffeedata = await firestore().collection('coffee_shop').get();
-                        const coffeeDataArray = coffeedata.docs.map(doc => doc.data());
-                        // console.log("🕵️‍♂️ > file: store.ts:25 > getData: > coffeedata: ", coffeeDataArray);
-                            set({ CoffeeList : coffeeDataArray })
-                        // set((state: any) => {
-                        //     state.CoffeeList = coffeeDataArray
-                        // })
-                    } catch (error) {
-                        console.log("🕵️‍♂️ > file: store.ts:33 > getData:async > error: ", error);
-                    }
+                try {
+                    const coffeedata = await firestore().collection('coffee_shop').get();
+                    const coffeeDataArray = coffeedata.docs.map(doc => doc.data());
+                    // console.log("🕵️‍♂️ > file: store.ts:25 > getData: > coffeedata: ", coffeeDataArray);
+                    set({ CoffeeList: coffeeDataArray })
+                    // set((state: any) => {
+                    //     state.CoffeeList = coffeeDataArray
+                    // })
+                    const beandata = await firestore().collection('bean_shop').get();
+                    const beanDataArray = beandata.docs.map(doc => doc.data());
+                    // console.log("🕵️‍♂️ > file: store.ts:25 > getData: > beandata: ", beanDataArray);
+                    set({ BeanList: beanDataArray })
+                } catch (error) {
+                    console.log("🕵️‍♂️ > file: store.ts:33 > getData:async > error: ", error);
+                }
             },
             addToCart: (cartItem: any) => set(produce(state => {
                 let found = false;

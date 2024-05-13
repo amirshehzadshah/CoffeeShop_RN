@@ -7,6 +7,9 @@ import PaymentFooter from '../components/PaymentFooter'
 
 const DetailsScreen = ({ navigation, route }: any) => {
   const ItemOfIndex = useStore((state: any) => route.params.type == 'Coffee' ? state.CoffeeList : state.BeanList)[route.params.index]
+
+  console.log("🕵️‍♂️ > file: DetailsScreen.tsx:11 > DetailsScreen > ItemOfIndex: ", ItemOfIndex);
+
   const addToFavoriteList = useStore((state: any) => state.addToFavoriteList)
   const deleteFromFavoriteList = useStore((state: any) => state.deleteFromFavoriteList)
   const addToCart = useStore((state: any) => state.addToCart)

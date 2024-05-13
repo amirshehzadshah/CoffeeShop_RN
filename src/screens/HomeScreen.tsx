@@ -9,6 +9,9 @@ import Customicon from '../components/Customicon';
 import CoffeeCard from '../components/CoffeeCard';
 
 const getCategoriesFromData = (data: any) => {
+
+  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:13 > getCategoriesFromData > data: ", data);
+
   let temp: any = {};
   for (let i = 0; i < data.length; i++) {
     if (temp[data[i].name] == undefined) {
@@ -20,10 +23,16 @@ const getCategoriesFromData = (data: any) => {
   let catagories = Object.keys(temp);
   catagories.unshift('All')
   // console.log("🕵️‍♂️ > file: HomeScreen.tsx:22 > getCategoriesFromData > catagories: ", catagories);
+  // console.log("Categories:", catagories); // Log the categories array to check its contents
+  // console.log("Data length:", data.length); // Log the length of the data array to ensure it's not empty
+  // console.log("Temp object:", temp); // Log the temp object to see its structure and content
+
   return catagories;
 }
 
 const getCoffeeList = (catagory: string, data: any) => {
+  console.log("🕵️‍♂️ > file: HomeScreen.tsx:31 > getCoffeeList > catagory: ", catagory);
+  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:32 > getCoffeeList > data: ", data);
   if (catagory == 'All') {
     return data;
   } else {
@@ -35,50 +44,45 @@ const getCoffeeList = (catagory: string, data: any) => {
 const HomeScreen = ({ navigation }: any) => {
 
   const getData = useStore((state: any) => state.getData)
-
   const CoffeeList = useStore((state: any) => state.CoffeeList)
-
-  console.log("🕵️‍♂️ > file: HomeScreen.tsx:40 > HomeScreen > CoffeeList: ", CoffeeList);
-
   const BeanList = useStore((state: any) => state.BeanList)
 
   // // Loop through each item in BeanList
   // BeanList.forEach((beanItem: any) => {
   //   // Access the prices array of each item
   //   const prices = beanItem.imagelink_square;
-
   //   // Now you can use the prices array as needed
   //   // console.log(prices);
   // });
 
   const addToCart = useStore((state: any) => state.addToCart)
   const calculateCartPrice = useStore((state: any) => state.calculateCartPrice)
-  
-  
-  const [catagories, setCatagories] = useState(getCategoriesFromData(CoffeeList))
-  // useEffect(() => {
-  //   console.log('catagories  :', catagories)
-  // },[catagories])
-  console.log("🕵️‍♂️ > file: HomeScreen.tsx:65 > HomeScreen > catagories: ", catagories);
-  
+
+
+  // const catagories = getCategoriesFromData(CoffeeList)
+  const [catagories, setCatagories] = useState<string[]>([])
+  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:65 > HomeScreen > catagories: ", catagories);
+
   const [searchText, setSearchText] = useState('')
   const [catagoryIndex, setCatagoryIndex] = useState({
     index: 0,
     catagory: catagories[0]
   })
-  const [sortedCoffee, setSortedCoffee] = useState(getCoffeeList(catagoryIndex.catagory, CoffeeList))
+
+    console.log("🕵️‍♂️ > file: HomeScreen.tsx:72 > HomeScreen > catagory: ", catagoryIndex.catagory);
+
+  // const [sortedCoffee, setSortedCoffee] = useState(getCoffeeList(catagoryIndex.catagory, CoffeeList))
+  const [sortedCoffee, setSortedCoffee] = useState<any[]>([]);
   const tabBarHeight = useBottomTabBarHeight();
   const ListRef: any = useRef<FlatList>();
 
   const searchCoffee = (search: string) => {
     if (search != '') {
       ListRef.current.scrollToOffset({
-
-        
         animated: true,
         offset: 0
       })
-      setCatagoryIndex({ index: 0, catagory: catagories[0] }) 
+      setCatagoryIndex({ index: 0, catagory: catagories[0] })
       setSortedCoffee([
         ...CoffeeList.filter((item: any) =>
           item.name.toLowerCase().includes(search.toLowerCase()))
@@ -108,11 +112,17 @@ const HomeScreen = ({ navigation }: any) => {
     ToastAndroid.showWithGravity(`${name} is Add to Cart`, ToastAndroid.SHORT, ToastAndroid.CENTER)
   }
 
-  if (!CoffeeList) {
-    useEffect(() => {
-      getData()
-    },[getData])
-  }
+  useEffect(() => {
+    // console.log('useEffect')
+    getData()
+  }, [])
+
+  useEffect(() => {
+    const initialCategories = getCategoriesFromData(CoffeeList);
+    setCatagories(initialCategories);
+    setCatagoryIndex({ index: 0, catagory: catagories[0] })
+    setSortedCoffee(getCoffeeList(catagoryIndex.catagory, CoffeeList));
+  }, [CoffeeList]); // Only run when CoffeeList changes
 
 
   return (
@@ -197,11 +207,11 @@ const HomeScreen = ({ navigation }: any) => {
             ref={ListRef}
             horizontal
             showsHorizontalScrollIndicator={false}
-            // ListEmptyComponent={
-            //   <View style={styles.EmptyListContainer}>
-            //     <Text style={styles.CatagoryText} >No Coffee Available</Text>
-            //   </View>
-            // }
+            ListEmptyComponent={
+              <View style={styles.EmptyListContainer}>
+                <Text style={styles.CatagoryText} >No Coffee Available</Text>
+              </View>
+            }
             data={sortedCoffee}
             contentContainerStyle={styles.FlatListContainer}
             keyExtractor={(item) => item.id}

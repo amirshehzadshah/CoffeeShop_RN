@@ -29,7 +29,7 @@ const CartItem: React.FC<CartItemProps> = ({
                         colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}
                         style={styles.CartItemLinearGradient}>
                         <View style={styles.CartItemRow}>
-                            <Image source={imagelink_square} style={styles.CartItemImage} />
+                            <Image source={{uri: imagelink_square}} style={styles.CartItemImage} />
                             <View style={styles.CartItemInfo}>
                                 <View>
                                     <Text style={styles.CartItemTitle}>{name}</Text>
@@ -76,7 +76,7 @@ const CartItem: React.FC<CartItemProps> = ({
                         colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}
                         style={styles.CartItemSingleLinearGradient}>
                         <View style={styles.CartItemRow}>
-                            <Image source={imagelink_square} style={styles.CartItemSingleImage} />
+                            <Image source={{uri: imagelink_square}} style={styles.CartItemSingleImage} />
                             <View style={styles.CartItemSingleInfo}>
                                 <View>
                                     <Text style={styles.CartItemTitle}>{name}</Text>
