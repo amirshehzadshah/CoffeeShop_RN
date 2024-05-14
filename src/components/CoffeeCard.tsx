@@ -10,7 +10,7 @@ const CARD_WIDTH = Dimensions.get('window').width * 0.32;
 interface CoffeeCardProps {
     id: string
     name: string
-    imagelink_square: ImageProps
+    imagelink_square: string
     special_ingredient: string
     price: any
     average_rating: number
@@ -20,26 +20,14 @@ interface CoffeeCardProps {
     buttonPressHandler: any
 }
 
-const CoffeeCard: React.FC<CoffeeCardProps> = ({
-    id,
-    name,
-    imagelink_square,
-    special_ingredient,
-    price,
-    average_rating,
-    type,
-    roasted,
-    index,
-    buttonPressHandler
-}) => {
-
+const CoffeeCard: React.FC<CoffeeCardProps> = ({ id, name, imagelink_square, special_ingredient, price, average_rating, type, roasted, index, buttonPressHandler}) => {
     return (
         <LinearGradient
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.CardLinearGradientContainer}
             colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}>
-            <ImageBackground source={{ uri: imagelink_square }} style={styles.CardImageBG} resizeMode='cover' >
+            <ImageBackground source={{uri: imagelink_square }} style={styles.CardImageBG} resizeMode='cover' >
                 <View style={styles.CardRatingContainer}>
                     <Customicon name='star' color={COLORS.primaryOrangeHex} size={FONTSIZE.size_16} />
                     <Text style={styles.CardRatingText}>{average_rating}</Text>

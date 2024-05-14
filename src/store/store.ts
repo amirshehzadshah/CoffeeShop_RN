@@ -20,6 +20,7 @@ export const useStore = create(
             OrderHistoryList: [],
             getData: async () => {
                 try {
+                    console.log('first hit')
                     const coffeedata = await firestore().collection('coffee_shop').get();
                     const coffeeDataArray = coffeedata.docs.map(doc => doc.data());
                     // console.log("🕵️‍♂️ > file: store.ts:25 > getData: > coffeedata: ", coffeeDataArray);
@@ -29,7 +30,7 @@ export const useStore = create(
                     // })
                     const beandata = await firestore().collection('bean_shop').get();
                     const beanDataArray = beandata.docs.map(doc => doc.data());
-                    // console.log("🕵️‍♂️ > file: store.ts:25 > getData: > beandata: ", beanDataArray);
+                    console.log("🕵️‍♂️ > file: store.ts:25 > getData: > beandata: ", beanDataArray);
                     set({ BeanList: beanDataArray })
                 } catch (error) {
                     console.log("🕵️‍♂️ > file: store.ts:33 > getData:async > error: ", error);
@@ -163,8 +164,10 @@ export const useStore = create(
             decrementCartItemQuantity: (id: string, size: string) => set(produce(state => {
                 for (let i = 0; i < state.CartList.length; i++) {
                     if (state.CartList[i].id == id) {
+                        console.log("🕵️‍♂️ > file: store.ts:166 > data index: i ", i);
                         for (let j = 0; j < state.CartList[i].prices.length; j++) {
                             if (state.CartList[i].prices[j].size == size) {
+                                console.log("🕵️‍♂️ > file: store.ts:169 > data index: j ", j);
                                 if (state.CartList[i].prices.length > 1) {
                                     if (state.CartList[i].prices[j].quantity > 1) {
                                         state.CartList[i].prices[j].quantity--;
@@ -175,10 +178,12 @@ export const useStore = create(
                                 }
                                 else {
                                     if (state.CartList[i].prices[j].quantity > 1) {
+                                        console.log("🕵️‍♂️ > file: store.ts:178 > data index: ", j);
                                         state.CartList[i].prices[j].quantity--;
                                     }
                                     else {
-                                        state.CartList.splice(j, 1);
+                                        console.log("🕵️‍♂️ > file: store.ts:182 > data index: ", j);
+                                        state.CartList.splice(i, 1);
                                     }
                                 }
                                 break;

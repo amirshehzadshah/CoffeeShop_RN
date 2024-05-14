@@ -23,6 +23,9 @@ const CartScreen = ({navigation, route}: any) => {
   }
 
   const incrementCartItemQuantityHandler = (id: string, size: string) => {
+
+    console.log("🕵️‍♂️ > file: CartScreen.tsx:27 > incrementCartItemQuantityHandler > id: ", id);
+
     incrementCartItemQuantity(id, size)
     calculateCartPrice()
   }

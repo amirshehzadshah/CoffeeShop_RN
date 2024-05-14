@@ -7,7 +7,7 @@ import Customicon from './Customicon'
 interface CartItemProps {
     id: string
     name: string
-    imagelink_square: ImageProps
+    imagelink_square: string
     special_ingredient: string
     roasted: string
     prices: any
@@ -16,9 +16,8 @@ interface CartItemProps {
     decrementCartItemQuantityHandler: any
 }
 
-const CartItem: React.FC<CartItemProps> = ({
-    id, name, imagelink_square, special_ingredient, roasted, prices, type, incrementCartItemQuantityHandler, decrementCartItemQuantityHandler
-}) => {
+const CartItem: React.FC<CartItemProps> = ({id, name, imagelink_square, special_ingredient, roasted, prices, type, incrementCartItemQuantityHandler, decrementCartItemQuantityHandler}) => {
+    console.log('ID Product : ', id)
     return (
         <View>
             {

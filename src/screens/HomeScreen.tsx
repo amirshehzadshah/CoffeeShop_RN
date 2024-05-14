@@ -9,9 +9,6 @@ import Customicon from '../components/Customicon';
 import CoffeeCard from '../components/CoffeeCard';
 
 const getCategoriesFromData = (data: any) => {
-
-  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:13 > getCategoriesFromData > data: ", data);
-
   let temp: any = {};
   for (let i = 0; i < data.length; i++) {
     if (temp[data[i].name] == undefined) {
@@ -22,16 +19,11 @@ const getCategoriesFromData = (data: any) => {
   }
   let catagories = Object.keys(temp);
   catagories.unshift('All')
-  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:22 > getCategoriesFromData > catagories: ", catagories);
-  // console.log("Categories:", catagories); // Log the categories array to check its contents
-  // console.log("Data length:", data.length); // Log the length of the data array to ensure it's not empty
-  // console.log("Temp object:", temp); // Log the temp object to see its structure and content
-
   return catagories;
 }
 
 const getCoffeeList = (catagory: string, data: any) => {
-  console.log("🕵️‍♂️ > file: HomeScreen.tsx:31 > getCoffeeList > catagory: ", catagory);
+  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:31 > getCoffeeList > catagory: ", catagory);
   // console.log("🕵️‍♂️ > file: HomeScreen.tsx:32 > getCoffeeList > data: ", data);
   if (catagory == 'All') {
     return data;
@@ -45,6 +37,9 @@ const HomeScreen = ({ navigation }: any) => {
 
   const getData = useStore((state: any) => state.getData)
   const CoffeeList = useStore((state: any) => state.CoffeeList)
+
+  console.log("🕵️‍♂️ > file: HomeScreen.tsx:49 > HomeScreen > CoffeeList: ", CoffeeList);
+
   const BeanList = useStore((state: any) => state.BeanList)
 
   // // Loop through each item in BeanList
@@ -61,24 +56,26 @@ const HomeScreen = ({ navigation }: any) => {
 
   // const catagories = getCategoriesFromData(CoffeeList)
   const [catagories, setCatagories] = useState<string[]>([])
-  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:65 > HomeScreen > catagories: ", catagories);
-
   const [searchText, setSearchText] = useState('')
   const [catagoryIndex, setCatagoryIndex] = useState({
     index: 0,
     catagory: catagories[0]
   })
-
-    console.log("🕵️‍♂️ > file: HomeScreen.tsx:72 > HomeScreen > catagory: ", catagoryIndex.catagory);
+  console.log("🕵️‍♂️ > file: HomeScreen.tsx:77 > HomeScreen > catagoryIndex: ", catagoryIndex);
 
   // const [sortedCoffee, setSortedCoffee] = useState(getCoffeeList(catagoryIndex.catagory, CoffeeList))
   const [sortedCoffee, setSortedCoffee] = useState<any[]>([]);
+
+  console.log("🕵️‍♂️ > file: HomeScreen.tsx:69 > HomeScreen > sortedCoffee: ", sortedCoffee);
+
   const tabBarHeight = useBottomTabBarHeight();
   const ListRef: any = useRef<FlatList>();
 
   const searchCoffee = (search: string) => {
     if (search != '') {
       ListRef.current.scrollToOffset({
+
+
         animated: true,
         offset: 0
       })
@@ -113,7 +110,6 @@ const HomeScreen = ({ navigation }: any) => {
   }
 
   useEffect(() => {
-    // console.log('useEffect')
     getData()
   }, [])
 
@@ -121,8 +117,11 @@ const HomeScreen = ({ navigation }: any) => {
     const initialCategories = getCategoriesFromData(CoffeeList);
     setCatagories(initialCategories);
     setCatagoryIndex({ index: 0, catagory: catagories[0] })
-    setSortedCoffee(getCoffeeList(catagoryIndex.catagory, CoffeeList));
   }, [CoffeeList]); // Only run when CoffeeList changes
+
+  useEffect(() => {
+    setSortedCoffee(getCoffeeList(catagoryIndex.catagory, CoffeeList));
+  }, [catagoryIndex]);
 
 
   return (
@@ -199,7 +198,7 @@ const HomeScreen = ({ navigation }: any) => {
             ))
           }
         </ScrollView>
-        {!sortedCoffee && <View style={styles.EmptyListContainer}>
+        {sortedCoffee == undefined && <View style={styles.EmptyListContainer}>
           <Text style={styles.CatagoryText} >Loading . . .</Text>
         </View>}
         {sortedCoffee && (
@@ -311,9 +310,7 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.space_20
   },
   CatagoryScrollViewContainer: {
-    paddingHorizontal: SPACING.space_15,
-    borderWidth: 2,
-    borderColor: 'red'
+    paddingHorizontal: SPACING.space_15
   },
   CatagoryScrollViewItem: {
     alignItems: 'center'

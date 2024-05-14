@@ -6,9 +6,18 @@ import ImageBackGroundInfo from '../components/ImageBackGroundInfo'
 import PaymentFooter from '../components/PaymentFooter'
 
 const DetailsScreen = ({ navigation, route }: any) => {
-  const ItemOfIndex = useStore((state: any) => route.params.type == 'Coffee' ? state.CoffeeList : state.BeanList)[route.params.index]
 
-  console.log("🕵️‍♂️ > file: DetailsScreen.tsx:11 > DetailsScreen > ItemOfIndex: ", ItemOfIndex);
+  console.log("🕵️‍♂️ > file: DetailsScreen.tsx:10 > DetailsScreen > route: ", route);
+
+  const ItemOfIndex = useStore((state: any) => route.params.type == 'Coffee' ? state.CoffeeList : state.BeanList)[route.params.index]
+  // const ItemOfIndex = useStore((state: any) => route.params.type == 'Coffee' ? state.CoffeeList : state.BeanList)[route.params.id]
+  // const data = useStore((state: any) => route.params.type == 'Coffee' ? state.CoffeeList : state.BeanList)
+
+  // console.log("🕵️‍♂️ > file: DetailsScreen.tsx:14 > DetailsScreen > data: ", data.filter((item: any) => item.index == route.params.index));
+
+  // const ItemOfIndex = data.filter((item: any) => item.index == route.params.index)
+
+  // console.log("🕵️‍♂️ > file: DetailsScreen.tsx:11 > DetailsScreen > ItemOfIndex: ", ItemOfIndex.name);
 
   const addToFavoriteList = useStore((state: any) => state.addToFavoriteList)
   const deleteFromFavoriteList = useStore((state: any) => state.deleteFromFavoriteList)
