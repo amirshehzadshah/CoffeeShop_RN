@@ -37,9 +37,7 @@ const HomeScreen = ({ navigation }: any) => {
 
   const getData = useStore((state: any) => state.getData)
   const CoffeeList = useStore((state: any) => state.CoffeeList)
-
-  console.log("🕵️‍♂️ > file: HomeScreen.tsx:49 > HomeScreen > CoffeeList: ", CoffeeList);
-
+  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:49 > HomeScreen > CoffeeList: ", CoffeeList);
   const BeanList = useStore((state: any) => state.BeanList)
 
   // // Loop through each item in BeanList
@@ -61,12 +59,13 @@ const HomeScreen = ({ navigation }: any) => {
     index: 0,
     catagory: catagories[0]
   })
-  console.log("🕵️‍♂️ > file: HomeScreen.tsx:77 > HomeScreen > catagoryIndex: ", catagoryIndex);
+  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:77 > HomeScreen > catagoryIndex: ", catagoryIndex);
 
   // const [sortedCoffee, setSortedCoffee] = useState(getCoffeeList(catagoryIndex.catagory, CoffeeList))
   const [sortedCoffee, setSortedCoffee] = useState<any[]>([]);
 
-  console.log("🕵️‍♂️ > file: HomeScreen.tsx:69 > HomeScreen > sortedCoffee: ", sortedCoffee);
+  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:69 > HomeScreen > sortedCoffee: ", sortedCoffee);
+  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:69 > HomeScreen > sortedCoffee: ", sortedCoffee);
 
   const tabBarHeight = useBottomTabBarHeight();
   const ListRef: any = useRef<FlatList>();
@@ -168,7 +167,7 @@ const HomeScreen = ({ navigation }: any) => {
         </View>
         <ScrollView
           horizontal
-          // showsHorizontalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
           style={styles.CatagoryScrollViewStyle}>
           {
             catagories.map((data, index) => (
@@ -213,7 +212,7 @@ const HomeScreen = ({ navigation }: any) => {
             }
             data={sortedCoffee}
             contentContainerStyle={styles.FlatListContainer}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.index}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity onPress={() => {

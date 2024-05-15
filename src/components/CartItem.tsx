@@ -17,7 +17,7 @@ interface CartItemProps {
 }
 
 const CartItem: React.FC<CartItemProps> = ({id, name, imagelink_square, special_ingredient, roasted, prices, type, incrementCartItemQuantityHandler, decrementCartItemQuantityHandler}) => {
-    console.log('ID Product : ', id)
+    // console.log('ID Product : ', id)
     return (
         <View>
             {

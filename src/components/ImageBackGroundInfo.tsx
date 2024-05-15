@@ -22,7 +22,7 @@ interface ImageBackGroundInfoProps {
 
 const ImageBackGroundInfo: React.FC<ImageBackGroundInfoProps> = ({ EnableBackHandler, id, name, roasted, imagelink_portrait, ingredients, special_ingredient, average_rating, ratings_count, favourite, type, BackHandler, ToggleFavourite }) => {
 
-  console.log("🕵️‍♂️ > file: ImageBackGroundInfo.tsx:25 > Imagelink_portrait: ", imagelink_portrait);
+//   console.log("🕵️‍♂️ > file: ImageBackGroundInfo.tsx:25 > Imagelink_portrait: ", imagelink_portrait);
 
   return (
     <View>
