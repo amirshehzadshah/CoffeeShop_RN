@@ -65,7 +65,7 @@ const HomeScreen = ({ navigation }: any) => {
   const [sortedCoffee, setSortedCoffee] = useState<any[]>([]);
 
   // console.log("🕵️‍♂️ > file: HomeScreen.tsx:69 > HomeScreen > sortedCoffee: ", sortedCoffee);
-  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:69 > HomeScreen > sortedCoffee: ", sortedCoffee);
+  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:69 > HomeScreen > sortedCoffee: ", sortedCoffee.map((item) => item.id));
 
   const tabBarHeight = useBottomTabBarHeight();
   const ListRef: any = useRef<FlatList>();
@@ -212,7 +212,7 @@ const HomeScreen = ({ navigation }: any) => {
             }
             data={sortedCoffee}
             contentContainerStyle={styles.FlatListContainer}
-            keyExtractor={(item) => item.index}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity onPress={() => {

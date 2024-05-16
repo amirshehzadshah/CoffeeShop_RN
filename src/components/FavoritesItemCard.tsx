@@ -7,7 +7,7 @@ import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/th
 interface FavoritesItemCardProps {
     id: string
     name: string
-    imagelink_portrait: ImageProps
+    imagelink_portrait: string
     ingredients: string
     special_ingredient: string
     average_rating: number

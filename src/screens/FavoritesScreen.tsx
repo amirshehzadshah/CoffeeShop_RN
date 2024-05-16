@@ -9,15 +9,20 @@ import FavoritesItemCard from '../components/FavoritesItemCard'
 
 const FavoritesScreen = ({ navigation }: any) => {
   const FavoritesList = useStore((state: any) => state.FavoritesList)
+
+  console.log("🕵️‍♂️ > file: FavoritesScreen.tsx:13 > FavoritesScreen > FavoritesList: ", FavoritesList);
+
   const addToFavouriteList = useStore((state: any) => state.addToFavouriteList)
   const deleteFromFavouriteList = useStore((state: any) => state.deleteFromFavouriteList)
 
   const tabBarHeight = useBottomTabBarHeight()
 
-  const ToggleFavourite = (favourite: boolean, type: string, id: string) => {
-    favourite ? deleteFromFavouriteList(type, id) : addToFavouriteList(type, id)
+  const ToggleFavourite = (favourite: boolean, pid:string, type: string, id: string) => {
+    // console.log("🕵️‍♂️ > file: FavoritesScreen.tsx:21 > ToggleFavourite > ToggleFavourite: ", index);
+    // console.log("🕵️‍♂️ > file: FavoritesScreen.tsx:21 > ToggleFavourite > ToggleFavourite: ", type);
+    // console.log("🕵️‍♂️ > file: FavoritesScreen.tsx:21 > ToggleFavourite > ToggleFavourite: ", id);
+    favourite ? deleteFromFavouriteList(pid, type, id) : addToFavouriteList(pid, type, id)
   }
-
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />

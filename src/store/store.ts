@@ -21,9 +21,11 @@ export const useStore = create(
             getData: async () => {
                 try {
                     console.log('API hit Start')
-                    const coffeedata = await firestore().collection('coffees_shop').get();
+                    // const coffeedata = await firestore().collection('coffees_shop').get();
+                    const coffeedata = await firestore().collection('bean_shop_test').get();
                     const coffeeDataArray = coffeedata.docs.map(doc => doc.data());
-                    // console.log("🕵️‍♂️ > file: store.ts:25 > getData: > coffeedata: ", coffeeDataArray);
+                    console.log("🕵️‍♂️ > file: store.ts:25 > getData: > coffeedata: ", coffeeDataArray);
+
                     set({ CoffeeList: coffeeDataArray })
                     // set((state: any) => {
                     //     state.CoffeeList = coffeeDataArray
@@ -84,11 +86,12 @@ export const useStore = create(
                 }
                 state.CartPrice = totalprice.toFixed(2).toString()
             })),
-            addToFavoriteList: (type: string, id: string) =>
+            addToFavoriteList: (pid:string, type: string, id: string) =>
                 set(
                     produce(state => {
-                        console.log("🕵️‍♂️ > file: store.ts:89 > type: ", type);
-                        console.log("🕵️‍♂️ > file: store.ts:90 > id: ", id);
+                        // console.log("🕵️‍♂️ > file: store.ts:89 > index: ", pid);
+                        // console.log("🕵️‍♂️ > file: store.ts:89 > type: ", type);
+                        // console.log("🕵️‍♂️ > file: store.ts:90 > id: ", id);
                         if (type == 'Coffee') {
                             for (let i = 0; i < state.CoffeeList.length; i++) {
                                 if (state.CoffeeList[i].id == id) {
@@ -114,9 +117,23 @@ export const useStore = create(
                                 }
                             }
                         }
+                        const doc = firestore().collection(type === 'Coffee' ? 'coffees_shop' : 'beans_shop').doc();
+                        const pid = doc.id
+                        
+                        console.log("🕵️‍♂️ > file: store.ts:122 > docRef: ", doc.id);
+                        
+                        // Update Firestore document
+                        const docRef = firestore().collection(type === 'Coffee' ? 'coffees_shop' : 'beans_shop').doc();
+                        docRef.update({
+                            favourite: true // or false based on your logic
+                        }).then(() => {
+                            console.log("Document successfully updated in Firestore!");
+                        }).catch((error) => {
+                            console.error("Error updating document in Firestore: ", error);
+                        });
                     }),
                 ),
-            deleteFromFavoriteList: (type: string, id: string) => 
+            deleteFromFavoriteList: (type: string, id: string) =>
                 set(
                     produce(state => {
                         console.log("🕵️‍♂️ > file: store.ts:121 > type: ", type);
