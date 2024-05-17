@@ -21,10 +21,10 @@ export const useStore = create(
             getData: async () => {
                 try {
                     console.log('API hit Start')
-                    // const coffeedata = await firestore().collection('coffees_shop').get();
-                    const coffeedata = await firestore().collection('bean_shop_test').get();
+                    const coffeedata = await firestore().collection('coffees_shop').get();
+                    // const coffeedata = await firestore().collection('bean_shop_test').get();
                     const coffeeDataArray = coffeedata.docs.map(doc => doc.data());
-                    console.log("🕵️‍♂️ > file: store.ts:25 > getData: > coffeedata: ", coffeeDataArray);
+                    // console.log("🕵️‍♂️ > file: store.ts:25 > getData: > coffeedata: ", coffeeDataArray);
 
                     set({ CoffeeList: coffeeDataArray })
                     // set((state: any) => {
@@ -80,9 +80,15 @@ export const useStore = create(
                     let tempprice = 0;
                     for (let j = 0; j < state.CartList[i].prices?.length; j++) {
                         tempprice = tempprice + parseFloat(state.CartList[i].prices[j].price) * state.CartList[i].prices[j].quantity
+
+                        console.log("🕵️‍♂️ > file: store.ts:84 > tempprice: ", tempprice);
+
                     }
                     state.CartList[i].ItemPrice = tempprice.toFixed(2).toString()
                     totalprice = totalprice + tempprice
+
+                    console.log("🕵️‍♂️ > file: store.ts:87 > totalprice: ", totalprice);
+
                 }
                 state.CartPrice = totalprice.toFixed(2).toString()
             })),

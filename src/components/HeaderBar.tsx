@@ -3,15 +3,33 @@ import React from 'react'
 import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme'
 import GradientBGIcon from './GradientBGIcon';
 import ProfilePic from './ProfilePic';
+import { TouchableOpacity } from 'react-native';
 
 interface HeaderBarProps {
     title: string;
+    navigation: any;
+    navigatePath: string
 }
 
-const HeaderBar: React.FC<HeaderBarProps> = ({ title }) => {
+const HeaderBar: React.FC<HeaderBarProps> = ({ navigation, navigatePath, title }) => {
     return (
         <View style={styles.HeaderContainer}>
-            <GradientBGIcon name='menu' color={COLORS.primaryLightGreyHex} size={FONTSIZE.size_16} />
+            {
+                navigatePath ?
+                    <TouchableOpacity
+                        onPress={() => {
+                            navigation.navigate(`${navigatePath}`)
+                        }}>
+                        <GradientBGIcon name='menu' color={COLORS.primaryLightGreyHex} size={FONTSIZE.size_16} />
+                    </TouchableOpacity>
+                    :
+                    <TouchableOpacity
+                        onPress={() => {
+                            navigation.pop()
+                        }}>
+                        <GradientBGIcon name='left' color={COLORS.primaryLightGreyHex} size={FONTSIZE.size_16} />
+                    </TouchableOpacity>
+            }
             <Text style={styles.HeaderText}>{title}</Text>
             <ProfilePic />
         </View>

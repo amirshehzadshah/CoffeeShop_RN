@@ -23,9 +23,6 @@ const CartScreen = ({navigation, route}: any) => {
   }
 
   const incrementCartItemQuantityHandler = (id: string, size: string) => {
-
-    console.log("🕵️‍♂️ > file: CartScreen.tsx:27 > incrementCartItemQuantityHandler > id: ", id);
-
     incrementCartItemQuantity(id, size)
     calculateCartPrice()
   }
@@ -44,7 +41,7 @@ const CartScreen = ({navigation, route}: any) => {
       contentContainerStyle={styles.ScrollViewFlex}>
         <View style={[styles.ScrollViewInnerView, {marginBottom: tabBarHeight}]}>
         <View style={styles.ItemContainer}>
-        <HeaderBar title='Cart' />
+        <HeaderBar title='Cart' navigation={navigation} navigatePath='Menu'/>
         {
           CartList.length == 0 
           ? <EmptyListAnimation title='Cart is Empty' /> 

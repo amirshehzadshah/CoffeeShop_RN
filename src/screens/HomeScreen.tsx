@@ -127,7 +127,7 @@ const HomeScreen = ({ navigation }: any) => {
     <View style={styles.ScreenContainer}>
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}>
-        <HeaderBar title={''} />
+        <HeaderBar title='' navigation={navigation} navigatePath='Menu' />
         <Text style={styles.ScreenText}>Find the best{'\n'}coffee for you</Text>
         <View style={styles.InputContainerComponent}>
           <TouchableOpacity onPress={() => {

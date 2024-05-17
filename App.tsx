@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import DetailsScreen from './src/screens/DetailsScreen';
 import PaymentScreen from './src/screens/PaymentScreen';
 import TabNavigator from './src/navigators/TabNavigator';
+import MenuScreen from './src/screens/MenuScreen';
 
 const Stack = createNativeStackNavigator();
 const App = () => {
@@ -11,6 +12,11 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name='Tab' component={TabNavigator} options={
+          {
+            animation: 'slide_from_bottom'
+          }
+        } />
+        <Stack.Screen name='Menu' component={MenuScreen} options={
           {
             animation: 'slide_from_bottom'
           }
