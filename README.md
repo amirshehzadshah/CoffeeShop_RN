@@ -47,7 +47,7 @@ To run CoffeeShop locally on your machine, follow these steps:
    ```bash
    cd CoffeeShop
    npm install
-     
+   
 6. **Run the mobile app:**
    - Ensure you have React Native development environment set up. If not, follow the [React Native getting started guide](https://reactnative.dev/docs/next/environment-setup).
    - Start the Metro server:
