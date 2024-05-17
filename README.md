@@ -55,12 +55,10 @@ To run CoffeeShop locally on your machine, follow these steps:
      ```bash
      npx react-native start
      
-   - Run the app on Android or iOS emulator or on a physical device:
+   - Run the app on Android emulator or on a physical device:
      
      ```bash
      npx react-native run-android
-     # or
-     npx react-native run-ios
 
 7. **Access the CoffeeShop app:** Once the app is built and running, you can access it on your emulator or device. Follow the on-screen instructions to explore the app's features!
      
