@@ -9,11 +9,11 @@ const DetailsScreen = ({ navigation, route }: any) => {
 
   // console.log("🕵️‍♂️ > file: DetailsScreen.tsx:10 > DetailsScreen > route: ", route);
   const CoffeeList = useStore((state: any) => state.CoffeeList)
-  console.log("🕵️‍♂️ > file: HomeScreen.tsx:49 > DetailsScreen > CoffeeList: ", CoffeeList);
+  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:49 > DetailsScreen > CoffeeList: ", CoffeeList);
 
   const ItemOfIndex = useStore((state: any) => route.params.type == 'Coffee' ? state.CoffeeList : state.BeanList)[route.params.index]
 
-  console.log("🕵️‍♂️ > file: DetailsScreen.tsx:14 > DetailsScreen > ItemOfIndex: ", ItemOfIndex.name);
+  // console.log("🕵️‍♂️ > file: DetailsScreen.tsx:14 > DetailsScreen > ItemOfIndex: ", ItemOfIndex.name);
 
   // const data = useStore((state: any) => route.params.type == 'Coffee' ? state.CoffeeList : state.BeanList)
   // const ItemOfIndex = data.filter((item: any) => item.index == route.params.index)
@@ -32,7 +32,7 @@ const DetailsScreen = ({ navigation, route }: any) => {
 
   const ToggleFavourite = (favourite: boolean, pid:string, type: string, id: string) => {
 
-    console.log("🕵️‍♂️ > file: DetailsScreen.tsx:35 > ToggleFavourite > pid: ", pid);
+    // console.log("🕵️‍♂️ > file: DetailsScreen.tsx:35 > ToggleFavourite > pid: ", pid);
 
     favourite ? deleteFromFavoriteList(pid, type, id) : addToFavoriteList(pid, type, id)
   }

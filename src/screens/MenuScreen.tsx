@@ -44,29 +44,30 @@ const MenuScreen = ({ navigation }: any) => {
 
     return (
         <View style={styles.ScreenContainer}>
-            <StatusBar backgroundColor={COLORS.primaryBlackHex} />
-            <HeaderBar title='Menu' navigation={navigation} navigatePath='' />
-            <Text style={styles.ScreenText}>Choose From Our{'\n'}Best Menu</Text>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}>
+                <StatusBar backgroundColor={COLORS.primaryBlackHex} />
+                <HeaderBar title='Menu' navigation={navigation} navigatePath='' />
+                <Text style={styles.ScreenText}>Choose From Our{'\n'}Best Menu</Text>
                 <Text style={styles.CoffeeBeansTitle}>We will make your coffee on order.</Text>
-            <View style={styles.tabContainer}>
-                <TouchableOpacity
-                    onPress={() => handleCoffees()}
-                    style={activeButton === 1 ? styles.activeTabButton : styles.TabButton}>
-                    <Text style={styles.ButtonText}>Coffees</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => handleBeans()}
-                    style={activeButton === 2 ? styles.activeTabButton : styles.TabButton}>
-                    <Text style={styles.ButtonText}>Beans</Text>
-                </TouchableOpacity>
-            </View>
-            {/* <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}> */}
+                <View style={styles.tabContainer}>
+                    <TouchableOpacity
+                        onPress={() => handleCoffees()}
+                        style={activeButton === 1 ? styles.activeTabButton : styles.TabButton}>
+                        <Text style={styles.ButtonText}>Coffees</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => handleBeans()}
+                        style={activeButton === 2 ? styles.activeTabButton : styles.TabButton}>
+                        <Text style={styles.ButtonText}>Beans</Text>
+                    </TouchableOpacity>
+                </View>
                 {activeButton === 1 ?
                     <>
                         <Text style={styles.CoffeeBeansTitle}>Select your favourite!</Text>
                         <FlatList
                             ref={ListRef}
                             showsHorizontalScrollIndicator={false}
+                            scrollEnabled={false}  // Disable scrolling for FlatList
                             ListEmptyComponent={
                                 <View style={styles.EmptyListContainer}>
                                     <Text style={styles.CatagoryText} >No Coffee Available</Text>
@@ -107,6 +108,7 @@ const MenuScreen = ({ navigation }: any) => {
                         <Text style={styles.CoffeeBeansTitle}>What's your choice?</Text>
                         <FlatList
                             showsHorizontalScrollIndicator={false}
+                            scrollEnabled={false}  // Disable scrolling for FlatList
                             data={BeanList}
                             numColumns={2}
                             columnWrapperStyle={styles.columnWrapper}
@@ -140,7 +142,7 @@ const MenuScreen = ({ navigation }: any) => {
                             }} />
                     </>
                 }
-            {/* </ScrollView> */}
+            </ScrollView>
         </View>
     )
 }
