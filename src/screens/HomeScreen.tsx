@@ -59,6 +59,7 @@ const HomeScreen = ({ navigation }: any) => {
     index: 0,
     catagory: catagories[0]
   })
+  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:77 > HomeScreen > catagoryIndex: ", catagoryIndex);
 
   // const [sortedCoffee, setSortedCoffee] = useState(getCoffeeList(catagoryIndex.catagory, CoffeeList))
   const [sortedCoffee, setSortedCoffee] = useState<any[]>([]);
