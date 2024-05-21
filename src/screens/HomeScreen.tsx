@@ -23,8 +23,6 @@ const getCategoriesFromData = (data: any) => {
 }
 
 const getCoffeeList = (catagory: string, data: any) => {
-  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:31 > getCoffeeList > catagory: ", catagory);
-  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:32 > getCoffeeList > data: ", data);
   if (catagory == 'All') {
     return data;
   } else {
@@ -59,7 +57,6 @@ const HomeScreen = ({ navigation }: any) => {
     index: 0,
     catagory: catagories[0]
   })
-  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:77 > HomeScreen > catagoryIndex: ", catagoryIndex);
 
   // const [sortedCoffee, setSortedCoffee] = useState(getCoffeeList(catagoryIndex.catagory, CoffeeList))
   const [sortedCoffee, setSortedCoffee] = useState<any[]>([]);

@@ -10,7 +10,7 @@ import OrderHistoryCard from '../components/OrderHistoryCard'
 
 const OrderHistroyScreen = ({ navigation }: any) => {
   const OrderHistoryList = useStore((state: any) => state.OrderHistoryList)
-  console.log("🕵️‍♂️ > file: OrderHistroyScreen.tsx:8 > OrderHistroyScreen > OrderHistoryList: ", OrderHistoryList);
+  // console.log("🕵️‍♂️ > file: OrderHistroyScreen.tsx:8 > OrderHistroyScreen > OrderHistoryList: ", OrderHistoryList);
   const [showAnimation, setShowAnimation] = useState(false)
   const tabBarHeight = useBottomTabBarHeight();
 

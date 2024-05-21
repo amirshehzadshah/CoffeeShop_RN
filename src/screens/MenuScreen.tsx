@@ -12,7 +12,7 @@ const MenuScreen = ({ navigation }: any) => {
     const getData = useStore((state: any) => state.getData)
     const CoffeeList = useStore((state: any) => state.CoffeeList)
     const BeanList = useStore((state: any) => state.BeanList)
-
+    
     const addToCart = useStore((state: any) => state.addToCart)
     const calculateCartPrice = useStore((state: any) => state.calculateCartPrice)
 

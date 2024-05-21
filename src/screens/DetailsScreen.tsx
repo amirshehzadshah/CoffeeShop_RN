@@ -8,15 +8,10 @@ import PaymentFooter from '../components/PaymentFooter'
 const DetailsScreen = ({ navigation, route }: any) => {
 
   // console.log("🕵️‍♂️ > file: DetailsScreen.tsx:10 > DetailsScreen > route: ", route);
-  const CoffeeList = useStore((state: any) => state.CoffeeList)
-  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:49 > DetailsScreen > CoffeeList: ", CoffeeList);
 
   const ItemOfIndex = useStore((state: any) => route.params.type == 'Coffee' ? state.CoffeeList : state.BeanList)[route.params.index]
 
   // console.log("🕵️‍♂️ > file: DetailsScreen.tsx:14 > DetailsScreen > ItemOfIndex: ", ItemOfIndex.name);
-
-  // const data = useStore((state: any) => route.params.type == 'Coffee' ? state.CoffeeList : state.BeanList)
-  // const ItemOfIndex = data.filter((item: any) => item.index == route.params.index)
 
   const addToFavoriteList = useStore((state: any) => state.addToFavoriteList)
   const deleteFromFavoriteList = useStore((state: any) => state.deleteFromFavoriteList)
