@@ -5,13 +5,31 @@ import DetailsScreen from './src/screens/DetailsScreen';
 import PaymentScreen from './src/screens/PaymentScreen';
 import TabNavigator from './src/navigators/TabNavigator';
 import MenuScreen from './src/screens/MenuScreen';
+import StartUpScreen from './src/screens/StartUpScreen';
+import LoginScreen from './src/screens/LoginScreen';
+import SignUpScreen from './src/screens/SignUpScreen';
 
 const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name='Tab' component={TabNavigator} options={
+        <Stack.Screen name='StartUp' component={StartUpScreen} options={
+          {
+            animation: 'slide_from_bottom'
+          }
+        } />
+        <Stack.Screen name='Login' component={LoginScreen} options={
+          {
+            animation: 'slide_from_bottom'
+          }
+        } />
+        <Stack.Screen name='SignUp' component={SignUpScreen} options={
+          {
+            animation: 'slide_from_bottom'
+          }
+        } />
+        {/* <Stack.Screen name='Tab' component={TabNavigator} options={
           {
             animation: 'slide_from_bottom'
           }
@@ -30,7 +48,7 @@ const App = () => {
           {
             animation: 'slide_from_bottom'
           }
-        } />
+        } /> */}
       </Stack.Navigator>
     </NavigationContainer>
   )
