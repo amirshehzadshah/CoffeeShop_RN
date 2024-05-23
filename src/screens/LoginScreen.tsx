@@ -6,8 +6,8 @@ import google_icon from '../assets/img/Logo-google-icon.png'
 import { TextInput } from 'react-native'
 import { Formik } from 'formik'
 import validationSchema from '../validation/validationSchema'
-import PaymentMethod from '../components/PaymentMethod'
 import LinearGradient from 'react-native-linear-gradient'
+import { useStore } from '../store/store'
 
 interface FormValues {
     email: string;
@@ -16,12 +16,26 @@ interface FormValues {
 
 const LoginScreen = ({navigation}: any) => {
 
+    const { login } = useStore();
     const initialValues: FormValues = { email: '', password: '' };
 
     const hanldeSigninWithGoogle = () => {
         console.log('values');
     };
     
+    const handleLogin = async (values: { email: string; password: string; }) => {
+        try {
+          await login(values.email, values.password);
+          navigation.navigate('Tab');
+        } catch (error) {
+          console.error('Login error:', error);
+        }
+      };
+
+    const handleForgetPassword = () => {
+        navigation.navigate('ForgetPassword')
+    };
+
     const hanldeRegister = () => {
         navigation.navigate('SignUp')
     };
@@ -33,7 +47,7 @@ const LoginScreen = ({navigation}: any) => {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.ScrollViewFlex}>
                 <View style={styles.LogoImageContainer}>
-                    <Image source={logo} style={styles.LogoImage} />
+                    <Image source={logo}/>
                 </View>
                 <View style={styles.TextContainer}>
                     <Text style={styles.WelcomeText}>Welcome,</Text>
@@ -43,9 +57,7 @@ const LoginScreen = ({navigation}: any) => {
                     <Formik
                         initialValues={initialValues}
                         validationSchema={validationSchema}
-                        onSubmit={(values) => {
-                            console.log('values:', values);
-                        }}
+                        onSubmit={handleLogin}
                     >
                         {({
                             handleChange,
@@ -82,13 +94,13 @@ const LoginScreen = ({navigation}: any) => {
                                     secureTextEntry
                                 />
                                 <TouchableOpacity
-                                    // onPress={handleSubmit}
+                                    onPress={handleForgetPassword}
                                     style={styles.ForgetPasswordButton}>
                                     <Text style={styles.ForgetPasswordButtonText}>Forget Password?</Text>
                                 </TouchableOpacity>
                                 <View style={styles.LoginButtonContainer}>
                                     <TouchableOpacity
-                                        onPress={handleSubmit}
+                                        onPress={handleSubmit as any}
                                         style={styles.Button}>
                                         <Text style={styles.ButtonText}>Login</Text>
                                     </TouchableOpacity>

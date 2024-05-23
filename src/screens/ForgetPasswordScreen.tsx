@@ -2,42 +2,29 @@ import { Button, Image, ImageBackground, ScrollView, StatusBar, StyleSheet, Text
 import React, { useState } from 'react'
 import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme'
 import logo from '../assets/img/logo-icon.png'
-import google_icon from '../assets/img/Logo-google-icon.png'
 import { TextInput } from 'react-native'
 import { Formik } from 'formik'
-import validationSchemaSignUp from '../validation/validationSchemaSignUp'
-import LinearGradient from 'react-native-linear-gradient'
+import validationSchema from '../validation/validationSchema'
 import { useStore } from '../store/store'
 
 interface FormValues {
-    username: string;
     email: string;
-    password: string;
-    confirmPassword: string;
 }
 
-const SignUpScreen = ({ navigation }: any) => {
+const ForgetPasswordScreen = ({ navigation }: any) => {
 
-    const { register } = useStore();
+    const initialValues: FormValues = { email: '' };
+    const { resetPassword } = useStore();
 
-    const initialValues: FormValues = { username: '', email: '', password: '', confirmPassword: '' };
-
-    const hanldeSigninWithGoogle = () => {
-        console.log('values');
-    };
-
-    const handleRegister = async (values: { email: string; password: string; username: string }) => {
+    const handleResetPassword = async (values: { email: string }) => {
+        console.log('Password reset email sent at: ', values.email);
         try {
-            await register(values.email, values.password, values.username);
-            console.log(values)
+            await resetPassword(values.email);
+            console.log('Password reset email sent');
             navigation.navigate('Login');
         } catch (error) {
-            console.error('Registration error:', error);
+            console.error('Password reset error:', error);
         }
-    };
-
-    const hanldeLogin = () => {
-        navigation.navigate('Login')
     };
 
     return (
@@ -47,17 +34,20 @@ const SignUpScreen = ({ navigation }: any) => {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.ScrollViewFlex}>
                 <View style={styles.LogoImageContainer}>
-                    <Image source={logo} style={styles.LogoImage} />
+                    <Image source={logo} />
                 </View>
                 <View style={styles.TextContainer}>
-                    <Text style={styles.WelcomeText}>Welcome,</Text>
-                    <Text style={styles.CoffeeShopText}>Glad To See You!</Text>
+                    <Text style={styles.WelcomeText}>Forgot Password</Text>
+                    {/* <Text style={styles.CoffeeShopText}>Glad To See You!</Text> */}
                 </View>
                 <View style={styles.FormContainer}>
                     <Formik
                         initialValues={initialValues}
-                        validationSchema={validationSchemaSignUp}
-                        onSubmit={handleRegister}
+                        // validationSchema={validationSchema}
+                        onSubmit={handleResetPassword}
+                        // onSubmit={(email) => {
+                        //     console.log('Email: ', email)
+                        // }}
                     >
                         {({
                             handleChange,
@@ -68,18 +58,6 @@ const SignUpScreen = ({ navigation }: any) => {
                             touched,
                         }) => (
                             <View>
-                                {touched.username && errors.username && (
-                                    <Text style={styles.errorText}>{errors.username}</Text>
-                                )}
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Username"
-                                    placeholderTextColor={COLORS.primaryLightGreyHex}
-                                    onChangeText={handleChange('username')}
-                                    onBlur={handleBlur('username')}
-                                    value={values.username}
-                                    autoCapitalize="none"
-                                />
                                 {touched.email && errors.email && (
                                     <Text style={styles.errorText}>{errors.email}</Text>
                                 )}
@@ -93,67 +71,16 @@ const SignUpScreen = ({ navigation }: any) => {
                                     keyboardType="email-address"
                                     autoCapitalize="none"
                                 />
-                                {touched.password && errors.password && (
-                                    <Text style={styles.errorText}>{errors.password}</Text>
-                                )}
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Password"
-                                    placeholderTextColor={COLORS.primaryLightGreyHex}
-                                    onChangeText={handleChange('password')}
-                                    onBlur={handleBlur('password')}
-                                    value={values.password}
-                                    secureTextEntry
-                                />
-                                {touched.confirmPassword && errors.confirmPassword && (
-                                    <Text style={styles.errorText}>{errors.confirmPassword}</Text>
-                                )}
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Confirm Password"
-                                    placeholderTextColor={COLORS.primaryLightGreyHex}
-                                    onChangeText={handleChange('confirmPassword')}
-                                    onBlur={handleBlur('confirmPassword')}
-                                    value={values.confirmPassword}
-                                    secureTextEntry
-                                />
                                 <View style={styles.LoginButtonContainer}>
                                     <TouchableOpacity
                                         onPress={handleSubmit as any}
                                         style={styles.Button}>
-                                        <Text style={styles.ButtonText}>Register</Text>
+                                        <Text style={styles.ButtonText}>Reset Password</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
                         )}
                     </Formik>
-                </View>
-                <View style={styles.LoginDividerContainer}>
-                    <View style={styles.DividerLine} />
-                    <Text style={styles.LoginDividerText}>Or Register With</Text>
-                    <View style={styles.DividerLine} />
-                </View>
-                <View style={styles.SigninWithGoogleContainer}>
-                    <TouchableOpacity
-                        onPress={hanldeSigninWithGoogle}>
-                        <View style={styles.SigninWithGoogleCardContainer}>
-                            <LinearGradient
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 1 }}
-                                colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}
-                                style={styles.LinearGradientRegular}>
-                                <Image source={google_icon} style={styles.SigninWithGoogleImage} />
-                                <Text style={styles.SigninWithGoogleTitle}>Register with google</Text>
-                            </LinearGradient>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.BottomTextContainer}>
-                    <Text style={styles.AccountText}>Already have an account?</Text>
-                    <TouchableOpacity
-                        onPress={hanldeLogin}>
-                        <Text style={styles.RegisterText}>Login Now!</Text>
-                    </TouchableOpacity>
                 </View>
             </ScrollView>
         </View>
@@ -300,4 +227,4 @@ const styles = StyleSheet.create({
         color: COLORS.primaryOrangeHex
     },
 })
-export default SignUpScreen
+export default ForgetPasswordScreen

@@ -6,11 +6,13 @@ import { createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { produce } from "immer";
 import firestore from "@react-native-firebase/firestore";
+import auth from '@react-native-firebase/auth';
 
 
 export const useStore = create(
     persist(
         (set) => ({
+            userToken: null,
             CoffeeList: [],
             // BeanList: BeansData,
             BeanList: [],
@@ -18,6 +20,27 @@ export const useStore = create(
             FavoritesList: [],
             CartList: [],
             OrderHistoryList: [],
+            login: async (email: string, password: string) => {
+                const userCredential = await auth().signInWithEmailAndPassword(email, password);
+                set({ userToken: userCredential.user.uid });
+            },
+            register: async (email: string, password: string, username: string) => {
+                const userCredential = await auth().createUserWithEmailAndPassword(email.trim(), password);
+                await firestore().collection('users').doc(userCredential.user.uid).set({ username, email, password });
+            },
+            resetPassword: async (email: string) => {
+                console.log('email', email)
+                await auth().sendPasswordResetEmail(email);
+                console.log('Done Store')
+            },
+            logout: () => {
+                auth().signOut();
+                set({ userToken: null });
+            },
+            getUserToken: () => {
+                const user = auth().currentUser;
+                set({ userToken: user ? user.uid : null });
+            },
             getData: async () => {
                 try {
                     console.log('API hit Start')
@@ -92,7 +115,7 @@ export const useStore = create(
                 }
                 state.CartPrice = totalprice.toFixed(2).toString()
             })),
-            addToFavoriteList: (pid:string, type: string, id: string) =>
+            addToFavoriteList: (pid: string, type: string, id: string) =>
                 set(
                     produce(state => {
                         // console.log("🕵️‍♂️ > file: store.ts:89 > index: ", pid);
@@ -125,9 +148,9 @@ export const useStore = create(
                         }
                         const doc = firestore().collection(type === 'Coffee' ? 'coffees_shop' : 'beans_shop').doc();
                         const pid = doc.id
-                        
+
                         console.log("🕵️‍♂️ > file: store.ts:122 > docRef: ", doc.id);
-                        
+
                         // Update Firestore document
                         const docRef = firestore().collection(type === 'Coffee' ? 'coffees_shop' : 'beans_shop').doc();
                         docRef.update({
