@@ -33,7 +33,6 @@ const getCoffeeList = (catagory: string, data: any) => {
 
 const HomeScreen = ({ navigation }: any) => {
 
-  const { logout } = useStore();
   const getData = useStore((state: any) => state.getData)
   const CoffeeList = useStore((state: any) => state.CoffeeList)
   // console.log("🕵️‍♂️ > file: HomeScreen.tsx:49 > HomeScreen > CoffeeList: ", CoffeeList);
@@ -67,11 +66,6 @@ const HomeScreen = ({ navigation }: any) => {
 
   const tabBarHeight = useBottomTabBarHeight();
   const ListRef: any = useRef<FlatList>();
-
-  const handleLogout = () => {
-    logout();
-    navigation.replace('Startup');  // Navigate back to the Startup screen after logging out
-  };
 
   const searchCoffee = (search: string) => {
     if (search != '') {
@@ -131,7 +125,6 @@ const HomeScreen = ({ navigation }: any) => {
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}>
         <HeaderBar title='' navigation={navigation} navigatePath='Menu' />
-        <Button title="Logout" onPress={logout} />
         <Text style={styles.ScreenText}>Find the best{'\n'}coffee for you</Text>
         <View style={styles.InputContainerComponent}>
           <TouchableOpacity onPress={() => {

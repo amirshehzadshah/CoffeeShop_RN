@@ -13,6 +13,7 @@ export const useStore = create(
     persist(
         (set) => ({
             userToken: null,
+            UserDetails: [],
             CoffeeList: [],
             // BeanList: BeansData,
             BeanList: [],
@@ -26,7 +27,8 @@ export const useStore = create(
             },
             register: async (email: string, password: string, username: string) => {
                 const userCredential = await auth().createUserWithEmailAndPassword(email.trim(), password);
-                await firestore().collection('users').doc(userCredential.user.uid).set({ username, email, password });
+                const docRef = userCredential.user.uid;
+                await firestore().collection('users').doc(userCredential.user.uid).set({ id:docRef, username, email, password });
             },
             resetPassword: async (email: string) => {
                 console.log('email', email)
@@ -44,6 +46,12 @@ export const useStore = create(
             getData: async () => {
                 try {
                     console.log('API hit Start')
+                    const userdata = await firestore().collection('users').get();
+                    const userDataArray = userdata.docs.map(doc => doc.data());
+                    // console.log("🕵️‍♂️ > file: store.ts:50 > getData: > userdata: ", userDataArray);
+
+                    set({ UserDetails: userDataArray })
+
                     const coffeedata = await firestore().collection('coffees_shop').get();
                     // const coffeedata = await firestore().collection('bean_shop_test').get();
                     const coffeeDataArray = coffeedata.docs.map(doc => doc.data());
