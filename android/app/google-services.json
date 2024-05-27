@@ -12,7 +12,12 @@
           "package_name": "com.coffeeshop"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1098461650125-h2ttcrm03edc05lsvot851itpbu0luaf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDtysoEuTogdoHtt9qyGGgZ6JbXBoYdB_c"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1098461650125-h2ttcrm03edc05lsvot851itpbu0luaf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -37,6 +37,10 @@ const HomeScreen = ({ navigation }: any) => {
   const CoffeeList = useStore((state: any) => state.CoffeeList)
   // console.log("🕵️‍♂️ > file: HomeScreen.tsx:49 > HomeScreen > CoffeeList: ", CoffeeList);
   const BeanList = useStore((state: any) => state.BeanList)
+  const CartList = useStore((state: any) => state.CartList)
+
+  console.log("🕵️‍♂️ > file: HomeScreen.tsx:42 > HomeScreen > CartList: ", CartList);
+
 
   // // Loop through each item in BeanList
   // BeanList.forEach((beanItem: any) => {

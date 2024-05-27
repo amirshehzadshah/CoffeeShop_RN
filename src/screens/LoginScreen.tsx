@@ -1,5 +1,5 @@
 import { Button, Image, ImageBackground, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme'
 import logo from '../assets/img/logo-icon.png'
 import google_icon from '../assets/img/Logo-google-icon.png'
@@ -16,13 +16,12 @@ interface FormValues {
 
 const LoginScreen = ({navigation}: any) => {
 
-    const { login } = useStore();
+    const { login, googleSignIn }: any = useStore();
     const initialValues: FormValues = { email: '', password: '' };
 
-    const hanldeSigninWithGoogle = () => {
-        console.log('values');
-    };
-    
+    // console.log("🕵️‍♂️ > file: LoginScreen.tsx:23 > LoginScreen > login: ", typeof(login));
+    // console.log("🕵️‍♂️ > file: LoginScreen.tsx:23 > LoginScreen > googleSignin: ", typeof(googleSignIn));
+
     const handleLogin = async (values: { email: string; password: string; }) => {
         try {
           await login(values.email, values.password);
@@ -32,6 +31,33 @@ const LoginScreen = ({navigation}: any) => {
         }
       };
 
+    const hanldeSigninWithGoogle = async () => {
+        try {
+            console.log('values');
+            await googleSignIn();
+            // navigation.navigate('Home');
+          } catch (error) {
+            console.error('Google Sign-In error:', error);
+          }
+    };
+    
+    //   async function onGoogleButtonPress({auth}: any) {
+    //     try {
+    //         // Check if your device supports Google Play
+    //         await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    //         // Get the users ID token
+    //         const { idToken } = await GoogleSignin.signIn();
+          
+    //         // Create a Google credential with the token
+    //         const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+          
+    //         // Sign-in the user with the credential
+    //         return auth().signInWithCredential(googleCredential);
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    //   }
+    
     const handleForgetPassword = () => {
         navigation.navigate('ForgetPassword')
     };
@@ -39,6 +65,12 @@ const LoginScreen = ({navigation}: any) => {
     const hanldeRegister = () => {
         navigation.navigate('SignUp')
     };
+
+    // useEffect(() => {
+    //     GoogleSignin.configure({
+    //         webClientId: '1098461650125-h2ttcrm03edc05lsvot851itpbu0luaf.apps.googleusercontent.com',
+    //       });
+    // })
 
     return (
         <View style={styles.ScreenContainer}>

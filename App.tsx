@@ -10,18 +10,33 @@ import LoginScreen from './src/screens/LoginScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 import { useStore } from './src/store/store';
 import ForgetPasswordScreen from './src/screens/ForgetPasswordScreen';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
 
 const Stack = createNativeStackNavigator();
+
 const App = () => {
 
-  const { userToken, getUserToken } = useStore();
+  const { userToken, getUserToken }: any = useStore();
 
   console.log("🕵️‍♂️ > file: App.tsx:18 > App > userToken: ", userToken);
-
-
   useEffect(() => {
-    getUserToken();
+    GoogleSignin.configure({
+      webClientId: '1098461650125-h2ttcrm03edc05lsvot851itpbu0luaf.apps.googleusercontent.com', // Replace with your actual web client ID
+    });
+
+    const unsubscribe = auth().onAuthStateChanged((user) => {
+      if (user) {
+        getUserToken();
+      }
+    });
+
+    return unsubscribe; // Cleanup subscription on unmount
   }, []);
+
+  // useEffect(() => {
+  //   getUserToken();
+  // }, []);
 
   return (
     <NavigationContainer>

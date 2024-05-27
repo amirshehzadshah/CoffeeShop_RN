@@ -1,4 +1,4 @@
-import { Modal, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
+import { Modal, ScrollView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 import React, { useState } from 'react'
 import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme'
 import GradientBGIcon from './GradientBGIcon';
@@ -18,19 +18,14 @@ interface HeaderBarProps {
 
 const HeaderBar: React.FC<HeaderBarProps> = ({ navigation, navigatePath, title }) => {
 
-    const { logout } = useStore();
-    const { userToken } = useStore();
+    const { logout }: any = useStore();
+    const { userToken }: any = useStore();
     const UserDetails = useStore((state: any) => state.UserDetails)
 
     const currentUser = UserDetails.filter((item: any) => item.id == userToken)
-
-    console.log("🕵️‍♂️ > file: HeaderBar.tsx:27 > currentUser: ", currentUser);
-    console.log("🕵️‍♂️ > file: HeaderBar.tsx:27 > currentUser: ", currentUser.map(item => item.username));
+    console.log("🕵️‍♂️ > file: HeaderBar.tsx:26 > currentUser: ", currentUser);
 
     const [modalVisible, setModalVisible] = useState(false);
-
-    // console.log("🕵️‍♂️ > file: HeaderBar.tsx:22 > modalVisible: ", modalVisible);
-
 
     const handleLogout = () => {
         console.log('Logout')
@@ -74,10 +69,16 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ navigation, navigatePath, title }
                     style={styles.ProfileDropdownMenuContainer}>
                     {
                         currentUser?.map((data: any) => (
-                            <View>
-                                <Text style={styles.Username}>{data?.username}</Text>
-                                <Text style={styles.EmailAddress}>{data.email}</Text>
-                            </View>
+                            <ScrollView
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                key={data.id}
+                                contentContainerStyle={styles.ScrollViewFlex}>
+                                <View style={styles.UserDetailsDropdown}>
+                                    <Text style={styles.Username}>{data.username}</Text>
+                                    <Text style={styles.EmailAddress}>{data.email}</Text>
+                                </View>
+                            </ScrollView>
                         ))
                     }
                     <ProfileDropdownMenu icon={AccountIcon} title='Account' />
@@ -104,6 +105,7 @@ const styles = StyleSheet.create({
         fontSize: FONTSIZE.size_20,
         color: COLORS.primaryWhiteHex
     },
+    ProfileMenuContainer: {},    
     ProfileDropdownMenuContainer: {
         position: 'absolute',
         top: SPACING.space_36 * 2,
@@ -111,6 +113,13 @@ const styles = StyleSheet.create({
         zIndex: 99999,
         padding: SPACING.space_16,
         borderRadius: BORDERRADIUS.radius_20,
+        width: 351
+        // borderWidth: 2, borderColor: 'red'
+    },
+    ScrollViewFlex: {
+        flexGrow: 1,
+    },
+    UserDetailsDropdown: {
         // borderWidth: 2, borderColor: 'red'
     },
     Username: {

@@ -8,6 +8,7 @@ import { Formik } from 'formik'
 import validationSchemaSignUp from '../validation/validationSchemaSignUp'
 import LinearGradient from 'react-native-linear-gradient'
 import { useStore } from '../store/store'
+import PopUpAnimation from '../components/PopUpAnimation'
 
 interface FormValues {
     username: string;
@@ -18,7 +19,8 @@ interface FormValues {
 
 const SignUpScreen = ({ navigation }: any) => {
 
-    const { register } = useStore();
+    const { register }: any = useStore();
+    const [showAnimation, setShowAnimation] = useState(false)
 
     const initialValues: FormValues = { username: '', email: '', password: '', confirmPassword: '' };
 
@@ -28,8 +30,10 @@ const SignUpScreen = ({ navigation }: any) => {
 
     const handleRegister = async (values: { email: string; password: string; username: string }) => {
         try {
+            setShowAnimation(true);
             await register(values.email, values.password, values.username);
             console.log(values)
+            setShowAnimation(false);
             navigation.navigate('Login');
         } catch (error) {
             console.error('Registration error:', error);
@@ -43,6 +47,9 @@ const SignUpScreen = ({ navigation }: any) => {
     return (
         <View style={styles.ScreenContainer}>
             <StatusBar translucent backgroundColor="transparent" />
+            {
+                showAnimation ? <PopUpAnimation style={styles.LottieAnimation} source={require('../lottie/successfulregister.json')} /> : <></>
+            }
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.ScrollViewFlex}>
@@ -165,6 +172,9 @@ const styles = StyleSheet.create({
     ScreenContainer: {
         flex: 1,
         backgroundColor: COLORS.primaryBlackHex
+    },
+    LottieAnimation: {
+        flex: 1
     },
     ScrollViewFlex: {
         flexGrow: 1,
