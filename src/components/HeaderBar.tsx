@@ -23,7 +23,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ navigation, navigatePath, title }
     const UserDetails = useStore((state: any) => state.UserDetails)
 
     const currentUser = UserDetails.filter((item: any) => item.id == userToken)
-    console.log("🕵️‍♂️ > file: HeaderBar.tsx:26 > currentUser: ", currentUser);
+    // console.log("🕵️‍♂️ > file: HeaderBar.tsx:26 > currentUser: ", currentUser);
 
     const [modalVisible, setModalVisible] = useState(false);
 

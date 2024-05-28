@@ -39,7 +39,7 @@ const HomeScreen = ({ navigation }: any) => {
   const BeanList = useStore((state: any) => state.BeanList)
   const CartList = useStore((state: any) => state.CartList)
 
-  console.log("🕵️‍♂️ > file: HomeScreen.tsx:42 > HomeScreen > CartList: ", CartList);
+  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:42 > HomeScreen > CartList: ", CartList);
 
 
   // // Loop through each item in BeanList
@@ -65,8 +65,9 @@ const HomeScreen = ({ navigation }: any) => {
   // const [sortedCoffee, setSortedCoffee] = useState(getCoffeeList(catagoryIndex.catagory, CoffeeList))
   const [sortedCoffee, setSortedCoffee] = useState<any[]>([]);
 
-  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:69 > HomeScreen > sortedCoffee: ", sortedCoffee);
-  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:69 > HomeScreen > sortedCoffee: ", sortedCoffee.map((item) => item.id));
+  console.log("🕵️‍♂️ > file: HomeScreen.tsx:69 > HomeScreen > sortedCoffee: ", sortedCoffee);
+  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:69 > HomeScreen > sortedCoffee: ", sortedCoffee.map((item) => item.name));
+  // console.log("🕵️‍♂️ > file: HomeScreen.tsx:69 > HomeScreen > sortedCoffee: ", sortedCoffee.filter((item) => item.name == 'Black Coffee'));
 
   const tabBarHeight = useBottomTabBarHeight();
   const ListRef: any = useRef<FlatList>();
@@ -74,8 +75,6 @@ const HomeScreen = ({ navigation }: any) => {
   const searchCoffee = (search: string) => {
     if (search != '') {
       ListRef.current.scrollToOffset({
-
-
         animated: true,
         offset: 0
       })

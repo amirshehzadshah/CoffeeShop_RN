@@ -28,6 +28,8 @@ const App = () => {
     const unsubscribe = auth().onAuthStateChanged((user) => {
       if (user) {
         getUserToken();
+      } else {
+        console.log('No User Affected')
       }
     });
 

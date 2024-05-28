@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { produce } from "immer";
 import firestore from "@react-native-firebase/firestore";
 import auth from '@react-native-firebase/auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 
 
 export const useStore = create(
@@ -29,19 +29,34 @@ export const useStore = create(
             register: async (email: string, password: string, username: string) => {
                 const userCredential = await auth().createUserWithEmailAndPassword(email.trim(), password);
                 const docRef = userCredential.user.uid;
-                await firestore().collection('users').doc(userCredential.user.uid).set({ id:docRef, username, email, password });
+                await firestore().collection('users').doc(userCredential.user.uid).set({ id: docRef, username, email, password });
             },
             googleSignIn: async () => {
                 try {
-                  await GoogleSignin.hasPlayServices();
-                  const { idToken } = await GoogleSignin.signIn();
-                  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-                  const userCredential = await auth().signInWithCredential(googleCredential);
-                  set({ userToken: userCredential.user.uid });
-                } catch (error) {
-                  console.error('Google Sign-In error:', error);
+                    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+                    console.log('first')
+                    
+                    const signInResult = await GoogleSignin.signIn();
+                    console.log('GoogleSignin.signIn(): ', signInResult);
+
+                    const { idToken } = signInResult;
+                    console.log('Second')
+
+                    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+                    const userCredential = await auth().signInWithCredential(googleCredential);
+                    set({ userToken: userCredential.user.uid });
+                } catch (error: any) {
+                    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+                        console.log(statusCodes.SIGN_IN_CANCELLED)
+                    } else if (error.code === statusCodes.IN_PROGRESS) {
+                        console.log(statusCodes.IN_PROGRESS)
+                    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+                        console.log(statusCodes.PLAY_SERVICES_NOT_AVAILABLE)
+                    } else {
+                        console.error('===> Google Sign-In error:', error);
+                    }
                 }
-              },
+            },
             resetPassword: async (email: string) => {
                 console.log('email', email)
                 await auth().sendPasswordResetEmail(email);

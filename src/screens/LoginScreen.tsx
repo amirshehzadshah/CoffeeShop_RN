@@ -8,13 +8,14 @@ import { Formik } from 'formik'
 import validationSchema from '../validation/validationSchema'
 import LinearGradient from 'react-native-linear-gradient'
 import { useStore } from '../store/store'
+import { GoogleSigninButton } from '@react-native-google-signin/google-signin'
 
 interface FormValues {
     email: string;
     password: string;
 }
 
-const LoginScreen = ({navigation}: any) => {
+const LoginScreen = ({ navigation }: any) => {
 
     const { login, googleSignIn }: any = useStore();
     const initialValues: FormValues = { email: '', password: '' };
@@ -24,40 +25,24 @@ const LoginScreen = ({navigation}: any) => {
 
     const handleLogin = async (values: { email: string; password: string; }) => {
         try {
-          await login(values.email, values.password);
-          navigation.navigate('Tab');
+            await login(values.email, values.password);
+            navigation.navigate('Tab');
         } catch (error) {
-          console.error('Login error:', error);
+            console.error('Login error:', error);
         }
-      };
+    };
 
     const hanldeSigninWithGoogle = async () => {
         try {
             console.log('values');
             await googleSignIn();
-            // navigation.navigate('Home');
-          } catch (error) {
+            console.log('User signed in using Google')
+            // navigation.navigate('Tab');
+        } catch (error) {
             console.error('Google Sign-In error:', error);
-          }
+        }
     };
-    
-    //   async function onGoogleButtonPress({auth}: any) {
-    //     try {
-    //         // Check if your device supports Google Play
-    //         await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-    //         // Get the users ID token
-    //         const { idToken } = await GoogleSignin.signIn();
-          
-    //         // Create a Google credential with the token
-    //         const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-          
-    //         // Sign-in the user with the credential
-    //         return auth().signInWithCredential(googleCredential);
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    //   }
-    
+
     const handleForgetPassword = () => {
         navigation.navigate('ForgetPassword')
     };
@@ -79,7 +64,7 @@ const LoginScreen = ({navigation}: any) => {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.ScrollViewFlex}>
                 <View style={styles.LogoImageContainer}>
-                    <Image source={logo}/>
+                    <Image source={logo} />
                 </View>
                 <View style={styles.TextContainer}>
                     <Text style={styles.WelcomeText}>Welcome,</Text>
@@ -147,7 +132,7 @@ const LoginScreen = ({navigation}: any) => {
                     <View style={styles.DividerLine} />
                 </View>
                 <View style={styles.SigninWithGoogleContainer}>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         onPress={hanldeSigninWithGoogle}>
                         <View style={styles.SigninWithGoogleCardContainer}>
                             <LinearGradient
@@ -159,13 +144,18 @@ const LoginScreen = ({navigation}: any) => {
                                 <Text style={styles.SigninWithGoogleTitle}>Signin with google</Text>
                             </LinearGradient>
                         </View>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
+                    <GoogleSigninButton
+                        size={GoogleSigninButton.Size.Wide}
+                        color={GoogleSigninButton.Color.Dark}
+                        onPress={hanldeSigninWithGoogle}
+                    />
                 </View>
                 <View style={styles.BottomTextContainer}>
                     <Text style={styles.AccountText}>Don’t have an account?</Text>
                     <TouchableOpacity
                         onPress={hanldeRegister}>
-                    <Text style={styles.RegisterText}>Register Now!</Text>
+                        <Text style={styles.RegisterText}>Register Now!</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
