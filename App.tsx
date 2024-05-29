@@ -18,11 +18,12 @@ const Stack = createNativeStackNavigator();
 const App = () => {
 
   const { userToken, getUserToken }: any = useStore();
-
   console.log("🕵️‍♂️ > file: App.tsx:18 > App > userToken: ", userToken);
+  
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId: '1098461650125-h2ttcrm03edc05lsvot851itpbu0luaf.apps.googleusercontent.com', // Replace with your actual web client ID
+      webClientId: '1098461650125-h44s38hte4dfl8vdrk9rqgmdfior8elo.apps.googleusercontent.com', // firebase
+      // webClientId: '1098461650125-h2ttcrm03edc05lsvot851itpbu0luaf.apps.googleusercontent.com', // Replace with your actual web client ID
     });
 
     const unsubscribe = auth().onAuthStateChanged((user) => {
@@ -35,10 +36,6 @@ const App = () => {
 
     return unsubscribe; // Cleanup subscription on unmount
   }, []);
-
-  // useEffect(() => {
-  //   getUserToken();
-  // }, []);
 
   return (
     <NavigationContainer>

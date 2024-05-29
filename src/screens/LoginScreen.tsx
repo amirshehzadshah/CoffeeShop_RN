@@ -20,9 +20,6 @@ const LoginScreen = ({ navigation }: any) => {
     const { login, googleSignIn }: any = useStore();
     const initialValues: FormValues = { email: '', password: '' };
 
-    // console.log("🕵️‍♂️ > file: LoginScreen.tsx:23 > LoginScreen > login: ", typeof(login));
-    // console.log("🕵️‍♂️ > file: LoginScreen.tsx:23 > LoginScreen > googleSignin: ", typeof(googleSignIn));
-
     const handleLogin = async (values: { email: string; password: string; }) => {
         try {
             await login(values.email, values.password);
@@ -50,12 +47,6 @@ const LoginScreen = ({ navigation }: any) => {
     const hanldeRegister = () => {
         navigation.navigate('SignUp')
     };
-
-    // useEffect(() => {
-    //     GoogleSignin.configure({
-    //         webClientId: '1098461650125-h2ttcrm03edc05lsvot851itpbu0luaf.apps.googleusercontent.com',
-    //       });
-    // })
 
     return (
         <View style={styles.ScreenContainer}>
